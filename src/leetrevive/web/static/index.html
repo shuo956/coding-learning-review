@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>leetrevive</title>
+  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+  <style>
+    /* ── Reset & base ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0d0d;
+      --surface:   #161616;
+      --surface2:  #1f1f1f;
+      --border:    #2a2a2a;
+      --text:      #e2e2e2;
+      --muted:     #666;
+      --accent:    #4ade80;
+      --accent2:   #22d3ee;
+      --easy:      #4ade80;
+      --medium:    #fbbf24;
+      --hard:      #f87171;
+      --strong:    #4ade80;
+      --developing:#fbbf24;
+      --weak:      #f87171;
+      --unreviewed:#444;
+      --radius:    10px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav ──────────────────────────────────────────────────────── */
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 28px;
+      height: 56px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+      margin-right: 20px;
+    }
+
+    .nav-tab {
+      padding: 6px 16px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .nav-tab:hover   { color: var(--text); background: var(--surface2); }
+    .nav-tab.active  { color: var(--text); background: var(--surface2); }
+
+    .nav-stats {
+      margin-left: auto;
+      display: flex;
+      gap: 20px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .nav-stats span b { color: var(--text); }
+    .nav-stats .overdue b { color: var(--hard); }
+
+    /* ── Views ────────────────────────────────────────────────────── */
+    .view { display: none; flex: 1; }
+    .view.active { display: flex; }
+
+    /* ── TODAY VIEW ───────────────────────────────────────────────── */
+    #view-today {
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px;
+      gap: 32px;
+    }
+
+    .today-hero { text-align: center; }
+    .today-hero h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
+    .today-hero p  { color: var(--muted); font-size: 0.9rem; }
+
+    .btn-generate {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .btn-generate:hover    { opacity: 0.9; }
+    .btn-generate:active   { transform: scale(0.98); }
+    .btn-generate:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .cards-grid {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      max-width: 1060px;
+    }
+
+    /* ── Problem card ─────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 24px;
+      width: 320px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      animation: fadeUp 0.25s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .card-num {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--surface2);
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+    .card-meta { flex: 1; }
+    .card-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .card-pid { font-size: 0.75rem; color: var(--muted); }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-easy      { background: #14532d55; color: var(--easy); }
+    .badge-medium    { background: #78350f55; color: var(--medium); }
+    .badge-hard      { background: #7f1d1d55; color: var(--hard); }
+    .badge-reason    { background: #1e3a5f; color: var(--accent2); }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .tag-pill {
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      background: var(--surface2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .card-actions { display: flex; gap: 8px; margin-top: auto; }
+
+    .card-insight {
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: var(--muted);
+      background: var(--surface2);
+      border-left: 3px solid var(--accent2);
+      padding: 7px 10px;
+      border-radius: 0 4px 4px 0;
+      font-style: italic;
+    }
+    .card-insight-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      display: block;
+      margin-bottom: 3px;
+      font-style: normal;
+    }
+
+    .btn-open {
+      flex: 1;
+      padding: 9px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+      text-decoration: none;
+      text-align: center;
+    }
+    .btn-open:hover { background: var(--surface2); }
+
+    .btn-done {
+      flex: 1;
+      padding: 9px;
+      border-radius: 6px;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-done:hover    { opacity: 0.85; }
+    .btn-done:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* ── Score panel (inside card) ────────────────────────────────── */
+    .score-panel {
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .score-panel label { font-size: 0.78rem; color: var(--muted); }
+    .score-btns { display: flex; gap: 6px; }
+    .score-btn {
+      flex: 1;
+      padding: 7px 4px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: var(--surface2);
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.12s;
+      text-align: center;
+    }
+    .score-btn:hover         { border-color: var(--accent); color: var(--text); }
+    .score-btn.selected      { border-color: var(--accent); background: #14532d55; color: var(--accent); }
+    .score-btn[data-score="0"].selected { border-color: var(--hard); background: #7f1d1d55; color: var(--hard); }
+    .score-btn[data-score="1"].selected { border-color: var(--medium); background: #78350f55; color: var(--medium); }
+
+    .score-panel input[type="number"],
+    .score-panel input[type="text"],
+    .score-panel textarea {
+      width: 100%;
+      padding: 7px 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 0.8rem;
+      font-family: inherit;
+      resize: none;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .score-panel input:focus,
+    .score-panel textarea:focus { border-color: var(--accent2); }
+
+    .btn-submit {
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
+      background: var(--accent2);
+      color: #000;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-submit:hover    { opacity: 0.85; }
+    .btn-submit:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .card-done-msg {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--accent);
+      padding: 8px 0;
+    }
+
+    /* ── MAP VIEW ─────────────────────────────────────────────────── */
+    #view-map {
+      flex-direction: row;
+      height: calc(100vh - 56px);
+      overflow: hidden;
+    }
+
+    #graph-canvas {
+      flex: 1;
+      /* explicit height required so vis-network can measure on init */
+      height: 100%;
+      min-height: 0;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .map-sidebar {
+      width: 300px;
+      flex-shrink: 0;
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-section {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-section h3 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .legend { display: flex; flex-direction: column; gap: 7px; }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+    }
+    .legend-dot {
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* node detail pane */
+    .node-detail { flex: 1; overflow-y: auto; padding: 18px 20px; }
+    .node-detail-empty {
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-align: center;
+      margin-top: 40px;
+    }
+    .node-name {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .node-stats {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .insight-wrap { margin-bottom: 14px; }
+    .insight-wrap label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 5px; }
+    .insight-input {
+      width: 100%;
+      padding: 8px 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 0.82rem;
+      font-family: inherit;
+      resize: none;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .insight-input:focus { border-color: var(--accent2); }
+    .btn-save-note {
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: none;
+      background: var(--accent2);
+      color: #000;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      opacity: 0.9;
+      transition: opacity 0.15s;
+    }
+    .btn-save-note:hover { opacity: 1; }
+
+    .node-problems { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+    .node-problem-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 10px;
+      background: var(--surface2);
+      border-radius: 6px;
+      font-size: 0.78rem;
+      gap: 8px;
+      border: 1px solid var(--border);
+    }
+    .node-problem-item a {
+      color: var(--text);
+      text-decoration: none;
+      flex: 1;
+    }
+    .node-problem-item a:hover { color: var(--accent2); }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ──────────────────────────────────────────────────────────── -->
+<nav>
+  <span class="logo">⟳ leetrevive</span>
+  <button class="nav-tab active" data-view="today">Today</button>
+  <button class="nav-tab"        data-view="map">Learning Map</button>
+  <div class="nav-stats" id="nav-stats"></div>
+</nav>
+
+<!-- ── Today view ───────────────────────────────────────────────────── -->
+<div class="view active" id="view-today">
+  <div class="today-hero">
+    <h1>What should I review today?</h1>
+    <p>Problems are picked based on due dates, weak spots, and recent activity.</p>
+  </div>
+
+  <button class="btn-generate" id="btn-generate">
+    ⚡ Generate Today's Problems
+  </button>
+
+  <div class="cards-grid" id="cards-grid"></div>
+</div>
+
+<!-- ── Map view ─────────────────────────────────────────────────────── -->
+<div class="view" id="view-map">
+  <div id="graph-canvas"></div>
+
+  <aside class="map-sidebar">
+    <div class="sidebar-section">
+      <h3>Legend</h3>
+      <div class="legend">
+        <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Mastery</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--strong)"></div>Strong (avg ≥ 2.0)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--developing)"></div>Developing (≥ 1.0)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--weak)"></div>Weak (&lt; 1.0)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1e1e1e;border:2px solid #3a3a3a"></div>Not yet reviewed</div>
+        <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:8px 0 4px">Priority Tier</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1e1e1e;border:3px solid #a78bfa;width:18px;height:18px"></div>🟣 Tier 1 — Foundation</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1e1e1e;border:3px solid #38bdf8;width:14px;height:14px"></div>🔵 Tier 2 — FAANG Standard</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#1e1e1e;border:2px solid #fb923c;width:11px;height:11px"></div>🟠 Tier 3 — Differentiators</div>
+        <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:8px 0 4px">Shape</div>
+        <div class="legend-item"><div style="width:12px;height:12px;background:#3a3a3a;border-radius:50%"></div>Data Structure</div>
+        <div class="legend-item"><div style="width:12px;height:12px;background:#3a3a3a;transform:rotate(45deg)"></div>⚡ Algorithm Pattern</div>
+      </div>
+    </div>
+
+    <div class="node-detail" id="node-detail">
+      <p class="node-detail-empty">Click a node to see details</p>
+    </div>
+  </aside>
+</div>
+
+<script>
+// ── Helpers ─────────────────────────────────────────────────────────────
+const $ = id => document.getElementById(id);
+const DIFF_BADGE = d => d
+  ? `<span class="badge badge-${d}">${d}</span>`
+  : '';
+
+// ── Nav ─────────────────────────────────────────────────────────────────
+document.querySelectorAll('.nav-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    btn.classList.add('active');
+    $('view-' + btn.dataset.view).classList.add('active');
+    if (btn.dataset.view === 'map') {
+      if (!mapInitialised) {
+        initMap();
+      } else if (window._visNetwork) {
+        // re-fit whenever user switches back to the map tab
+        setTimeout(() => window._visNetwork.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } }), 50);
+      }
+    }
+  });
+});
+
+// ── Load nav stats ───────────────────────────────────────────────────────
+async function loadStats() {
+  try {
+    const s = await fetch('/api/stats').then(r => r.json());
+    $('nav-stats').innerHTML = `
+      <span><b>${s.total_problems}</b> problems</span>
+      <span><b>${s.total_reviews}</b> reviews</span>
+      <span class="${s.overdue > 0 ? 'overdue' : ''}">
+        <b>${s.overdue}</b> overdue
+      </span>
+    `;
+  } catch(e) {}
+}
+loadStats();
+
+// ── TODAY: generate cards ────────────────────────────────────────────────
+const btnGen  = $('btn-generate');
+const cardsEl = $('cards-grid');
+
+btnGen.addEventListener('click', async () => {
+  btnGen.disabled = true;
+  btnGen.textContent = 'Loading…';
+  cardsEl.innerHTML = '';
+  try {
+    const data = await fetch('/api/today').then(r => r.json());
+    if (!data.picks.length) {
+      cardsEl.innerHTML = `<p style="color:var(--muted);font-size:.9rem">
+        🎉 Nothing due today — you're all caught up!
+      </p>`;
+    } else {
+      data.picks.forEach((p, i) => cardsEl.appendChild(buildCard(p, i + 1)));
+    }
+  } catch(e) {
+    cardsEl.innerHTML = `<p style="color:var(--hard)">Error loading picks. Is the server running?</p>`;
+  } finally {
+    btnGen.disabled = false;
+    btnGen.textContent = '⚡ Generate Today\'s Problems';
+  }
+});
+
+function buildCard(p, n) {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.style.animationDelay = `${(n-1) * 0.07}s`;
+
+  const tagPills = p.tags.slice(0,5)
+    .map(t => `<span class="tag-pill">${t}</span>`).join('');
+
+  card.innerHTML = `
+    <div class="card-header">
+      <div class="card-num">#${p.problem_id}</div>
+      <div class="card-meta">
+        <div class="card-title">${p.title}</div>
+        <div class="card-pid">
+          ${DIFF_BADGE(p.difficulty)}
+          ${p.pattern ? `<span class="badge" style="background:#1e3a5f;color:var(--accent2)">${p.pattern}</span>` : ''}
+        </div>
+      </div>
+    </div>
+
+    <div class="card-tags">${tagPills}</div>
+
+    ${p.insight ? `
+    <div class="card-insight">
+      <span class="card-insight-label">💡 Key insight</span>
+      ${p.insight}
+    </div>` : ''}
+
+    <div>
+      <span class="badge badge-reason">${p.reason}</span>
+    </div>
+
+    <div class="card-actions">
+      <a class="btn-open" href="${p.url || '#'}" target="_blank" rel="noopener">
+        Open LeetCode ↗
+      </a>
+      <button class="btn-done" data-pid="${p.problem_id}">Mark Done</button>
+    </div>
+  `;
+
+  card.querySelector('.btn-done').addEventListener('click', function() {
+    this.style.display = 'none';
+    const panel = buildScorePanel(p.problem_id, card);
+    card.appendChild(panel);
+  });
+
+  return card;
+}
+
+function buildScorePanel(pid, card) {
+  const panel = document.createElement('div');
+  panel.className = 'score-panel';
+  panel.innerHTML = `
+    <label>How did it go?</label>
+    <div class="score-btns">
+      <button class="score-btn" data-score="0">0<br><small>Blank</small></button>
+      <button class="score-btn" data-score="1">1<br><small>Partial</small></button>
+      <button class="score-btn" data-score="2">2<br><small>OK</small></button>
+      <button class="score-btn" data-score="3">3<br><small>Clean</small></button>
+    </div>
+    <input type="number" class="inp-minutes" placeholder="Minutes spent (optional)" min="1" max="999" />
+    <textarea class="inp-note" rows="2" placeholder="Note (optional)"></textarea>
+    <textarea class="inp-mistake" rows="2" placeholder="Mistake / what to remember (optional)"></textarea>
+    <button class="btn-submit" disabled>Submit</button>
+  `;
+
+  let selectedScore = null;
+
+  panel.querySelectorAll('.score-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      panel.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      selectedScore = parseInt(btn.dataset.score);
+      panel.querySelector('.btn-submit').disabled = false;
+    });
+  });
+
+  panel.querySelector('.btn-submit').addEventListener('click', async () => {
+    const body = {
+      problem_id: pid,
+      score:      selectedScore,
+      minutes:    parseInt(panel.querySelector('.inp-minutes').value) || null,
+      note:       panel.querySelector('.inp-note').value.trim() || null,
+      mistake:    panel.querySelector('.inp-mistake').value.trim() || null,
+    };
+    panel.querySelector('.btn-submit').disabled = true;
+    try {
+      const res = await fetch('/api/done', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(body),
+      }).then(r => r.json());
+      panel.innerHTML = `
+        <div class="card-done-msg">
+          ✓ Recorded — next due <b>${res.next_due_at}</b>
+          &nbsp;·&nbsp; review #${res.review_count}
+        </div>`;
+      loadStats();
+    } catch(e) {
+      panel.querySelector('.btn-submit').disabled = false;
+      alert('Error saving review.');
+    }
+  });
+
+  return panel;
+}
+
+// ── MAP: vis-network graph ───────────────────────────────────────────────
+let mapInitialised = false;
+let graphData = null;
+
+async function initMap() {
+  mapInitialised = true;
+
+  // Show loading state
+  const container = $('graph-canvas');
+  container.innerHTML = '<div style="display:grid;place-items:center;height:100%;color:#666;font-size:.85rem">Loading map…</div>';
+
+  let raw;
+  try {
+    raw = await fetch('/api/graph').then(r => r.json());
+  } catch(e) {
+    container.innerHTML = '<div style="display:grid;place-items:center;height:100%;color:#f87171;font-size:.85rem">Failed to load graph</div>';
+    return;
+  }
+  graphData = raw;
+  container.innerHTML = ''; // clear loading state
+
+  const COLOR = {
+    strong:     { bg: '#14532d', border: '#4ade80', font: '#e2e2e2' },
+    developing: { bg: '#78350f', border: '#fbbf24', font: '#e2e2e2' },
+    weak:       { bg: '#7f1d1d', border: '#f87171', font: '#e2e2e2' },
+    unreviewed: { bg: '#1e1e1e', border: '#3a3a3a', font: '#888'    },
+  };
+
+  // Tier accent colours (used as border overlay on top of mastery colour)
+  const TIER_BORDER = { tier1: '#a78bfa', tier2: '#38bdf8', tier3: '#fb923c', user: '#6b7280' };
+
+  const visNodes = new vis.DataSet(raw.nodes.map(n => {
+    const c = COLOR[n.mastery];
+
+    // Node size: tier1 largest, scale by interview freq when available
+    const freqBonus = (n.freq || 3) * 3;            // 3-15 px bonus
+    const tierBase  = n.group === 'tier1' ? 28
+                    : n.group === 'tier2' ? 22
+                    : n.group === 'tier3' ? 17 : 14;
+    const size = tierBase + freqBonus + Math.min(n.problem_count * 2, 10);
+
+    // Border: use tier colour when unreviewed, mastery colour otherwise
+    const borderColor = n.mastery === 'unreviewed'
+      ? (TIER_BORDER[n.group] || '#3a3a3a')
+      : c.border;
+
+    return {
+      id:    n.id,
+      label: n.label,
+      title: buildTooltip(n),
+      color: {
+        background: c.bg,
+        border:     borderColor,
+        highlight:  { background: c.bg, border: '#ffffff' },
+        hover:      { background: c.bg, border: '#ffffff' },
+      },
+      font:        { color: c.font, size: n.group === 'tier1' ? 15 : n.group === 'tier2' ? 13 : 12, bold: n.group !== 'user' },
+      size,
+      shape:       n.is_pattern ? 'diamond' : 'dot',
+      borderWidth: n.group === 'tier1' ? 4 : n.group === 'tier2' ? 3 : 2,
+      mass:        n.group === 'tier1' ? 3 : n.group === 'tier2' ? 2 : 1,
+    };
+  }));
+
+  const visEdges = new vis.DataSet(raw.edges.map((e, i) => ({
+    id:     i,
+    from:   e.from,
+    to:     e.to,
+    color:  { color: '#2d2d2d', highlight: '#4ade8088', hover: '#4ade8088' },
+    width:  1,
+    smooth: { type: 'curvedCW', roundness: 0.1 },
+    arrows: { to: { enabled: false } },
+  })));
+
+  const network = new vis.Network(
+    container,
+    { nodes: visNodes, edges: visEdges },
+    {
+      physics: {
+        enabled: true,
+        solver: 'forceAtlas2Based',
+        forceAtlas2Based: {
+          gravitationalConstant: -80,
+          centralGravity:        0.01,
+          springLength:          140,
+          springConstant:        0.08,
+          damping:               0.4,
+        },
+        stabilization: {
+          enabled:   true,
+          iterations: 300,
+          updateInterval: 25,
+        },
+      },
+      interaction: {
+        hover:        true,
+        tooltipDelay: 150,
+        zoomView:     true,
+        dragView:     true,
+      },
+      nodes: {
+        borderWidthSelected: 3,
+      },
+      edges: {
+        selectionWidth: 2,
+      },
+    }
+  );
+
+  // Store globally so the nav tab can call fit() when switching back
+  window._visNetwork = network;
+
+  // Once physics settles, fit all nodes into view
+  network.once('stabilizationIterationsDone', () => {
+    network.setOptions({ physics: { enabled: false } });
+    network.fit({ animation: { duration: 600, easingFunction: 'easeInOutQuad' } });
+  });
+
+  network.on('click', params => {
+    if (params.nodes.length) {
+      renderNodeDetail(params.nodes[0]);
+    } else {
+      $('node-detail').innerHTML = '<p class="node-detail-empty">Click a node to see details</p>';
+    }
+  });
+}
+
+function buildTooltip(n) {
+  // Return plain HTML string — vis-network renders it in its own tooltip div.
+  const TIER_LABEL = { tier1: '🟣 Tier 1 — Foundation', tier2: '🔵 Tier 2 — FAANG Standard', tier3: '🟠 Tier 3 — Differentiator', user: '👤 User Tag' };
+  const FREQ_STARS = n.freq ? '★'.repeat(n.freq) + '☆'.repeat(5 - n.freq) : null;
+  const lines = [
+    `<b style="color:#e2e2e2">${n.label}</b>`,
+  ];
+  if (TIER_LABEL[n.group]) lines.push(`<span style="color:#aaa;font-size:11px">${TIER_LABEL[n.group]}</span>`);
+  if (FREQ_STARS)          lines.push(`<span style="color:#fbbf24;font-size:11px">Interview freq: ${FREQ_STARS}</span>`);
+  lines.push(`<span style="color:#888">${n.problem_count} problem${n.problem_count !== 1 ? 's' : ''} in bank</span>`);
+  if (n.avg_score !== null) lines.push(`<span style="color:#aaa">avg score: ${n.avg_score} / 3</span>`);
+  if (n.note) lines.push(`<span style="color:#22d3ee;font-style:italic;max-width:200px;display:block">${n.note}</span>`);
+  return `<div style="background:#1a1a1a;border:1px solid #333;padding:8px 12px;border-radius:6px;font-size:12px;max-width:240px;line-height:1.6;font-family:sans-serif">${lines.join('<br>')}</div>`;
+}
+
+async function renderNodeDetail(nodeId) {
+  const n = graphData.nodes.find(x => x.id === nodeId);
+  if (!n) return;
+
+  const bank = await fetch('/api/bank').then(r => r.json());
+  const problems = bank.problems.filter(p =>
+    n.problem_ids.includes(p.problem_id)
+  );
+
+  const detail = $('node-detail');
+  const masteryColor = { strong: 'var(--strong)', developing: 'var(--developing)', weak: 'var(--hard)', unreviewed: 'var(--unreviewed)' }[n.mastery];
+  const TIER_LABEL = { tier1: '🟣 Tier 1 · Foundation', tier2: '🔵 Tier 2 · FAANG Standard', tier3: '🟠 Tier 3 · Differentiator' };
+  const freqStars  = n.freq ? ('★'.repeat(n.freq) + '☆'.repeat(5 - n.freq)) : null;
+
+  detail.innerHTML = `
+    <div class="node-name">${n.is_pattern ? '⚡ ' : ''}${n.label}</div>
+    ${n.group && TIER_LABEL[n.group] ? `<div style="font-size:.75rem;color:var(--muted);margin-bottom:2px">${TIER_LABEL[n.group]}</div>` : ''}
+    ${freqStars ? `<div style="font-size:.75rem;color:#fbbf24;margin-bottom:6px">Interview freq: ${freqStars}</div>` : ''}
+    <div class="node-stats" style="color:${masteryColor}">
+      ${n.mastery} · ${n.problem_count} problem${n.problem_count !== 1 ? 's' : ''}
+      ${n.avg_score !== null ? ` · avg ${n.avg_score}` : ''}
+    </div>
+
+    <div class="insight-wrap">
+      <label>Key insight</label>
+      <textarea class="insight-input" id="insight-input" rows="3"
+        placeholder="One sentence about this topic…">${n.note || ''}</textarea>
+      <br><br>
+      <button class="btn-save-note" id="btn-save-note">Save</button>
+      <span id="save-ok" style="font-size:.75rem;color:var(--accent);margin-left:8px;display:none">✓ saved</span>
+    </div>
+
+    <div style="font-size:.75rem;color:var(--muted);margin-bottom:6px;">Problems in bank</div>
+    <div class="node-problems">
+      ${problems.length === 0
+        ? `<div style="color:var(--muted);font-size:.8rem;font-style:italic">No problems added yet for this topic.</div>`
+        : problems.map(p => `
+        <div class="node-problem-item">
+          <a href="${p.url || '#'}" target="_blank" rel="noopener">
+            #${p.problem_id} ${p.title}
+          </a>
+          ${DIFF_BADGE(p.difficulty)}
+          ${p.insight ? `<div style="font-size:.72rem;color:#888;font-style:italic;margin-top:3px;padding-left:2px">${p.insight}</div>` : ''}
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  $('btn-save-note').addEventListener('click', async () => {
+    const note = $('insight-input').value.trim();
+    await fetch('/api/notes/' + encodeURIComponent(nodeId), {
+      method: 'PUT',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ note }),
+    });
+    // Update local cache so tooltip reflects new note
+    n.note = note;
+    $('save-ok').style.display = 'inline';
+    setTimeout(() => { $('save-ok').style.display = 'none'; }, 2000);
+  });
+}
+</script>
+</body>
+</html>

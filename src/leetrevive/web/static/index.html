@@ -4,28 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>leetrevive</title>
-  <script src="https://unpkg.com/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
   <style>
-    /* ── Reset & base ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #0d0d0d;
-      --surface:   #161616;
-      --surface2:  #1f1f1f;
-      --border:    #2a2a2a;
-      --text:      #e2e2e2;
-      --muted:     #666;
-      --accent:    #4ade80;
-      --accent2:   #22d3ee;
-      --easy:      #4ade80;
-      --medium:    #fbbf24;
-      --hard:      #f87171;
-      --strong:    #4ade80;
-      --developing:#fbbf24;
-      --weak:      #f87171;
-      --unreviewed:#444;
-      --radius:    10px;
+      --bg:       #0d0d0d;
+      --surface:  #161616;
+      --surface2: #1f1f1f;
+      --border:   #2a2a2a;
+      --text:     #e2e2e2;
+      --muted:    #666;
+      --accent:   #4ade80;
+      --accent2:  #22d3ee;
+      --easy:     #4ade80;
+      --medium:   #fbbf24;
+      --hard:     #f87171;
+      --radius:   10px;
     }
 
     body {
@@ -37,78 +31,74 @@
       flex-direction: column;
     }
 
-    /* ── Nav ──────────────────────────────────────────────────────── */
+    /* ── Nav ─────────────────────────────────────────────────────────── */
     nav {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 0 28px;
-      height: 56px;
+      gap: 6px;
+      padding: 0 24px;
+      height: 52px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
       position: sticky;
       top: 0;
       z-index: 100;
+      flex-shrink: 0;
     }
-
     .logo {
       font-weight: 700;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--accent);
       letter-spacing: -0.5px;
-      margin-right: 20px;
+      margin-right: 16px;
     }
-
     .nav-tab {
-      padding: 6px 16px;
+      padding: 5px 14px;
       border-radius: 6px;
       border: none;
       background: transparent;
       color: var(--muted);
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.15s;
     }
-    .nav-tab:hover   { color: var(--text); background: var(--surface2); }
-    .nav-tab.active  { color: var(--text); background: var(--surface2); }
-
+    .nav-tab:hover  { color: var(--text); background: var(--surface2); }
+    .nav-tab.active { color: var(--text); background: var(--surface2); }
     .nav-stats {
       margin-left: auto;
       display: flex;
-      gap: 20px;
-      font-size: 0.8rem;
+      gap: 18px;
+      font-size: 0.78rem;
       color: var(--muted);
     }
     .nav-stats span b { color: var(--text); }
     .nav-stats .overdue b { color: var(--hard); }
 
-    /* ── Views ────────────────────────────────────────────────────── */
-    .view { display: none; flex: 1; }
+    /* ── Views ────────────────────────────────────────────────────────── */
+    .view { display: none; flex: 1; flex-direction: column; }
     .view.active { display: flex; }
 
-    /* ── TODAY VIEW ───────────────────────────────────────────────── */
+    /* ── TODAY VIEW ───────────────────────────────────────────────────── */
     #view-today {
-      flex-direction: column;
       align-items: center;
-      padding: 48px 24px;
-      gap: 32px;
+      padding: 40px 24px;
+      gap: 28px;
     }
-
     .today-hero { text-align: center; }
-    .today-hero h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: 8px; }
-    .today-hero p  { color: var(--muted); font-size: 0.9rem; }
+    .today-hero h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
+    .today-hero p  { color: var(--muted); font-size: 0.87rem; }
 
     .btn-generate {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 14px 32px;
+      padding: 12px 28px;
       background: var(--accent);
       color: #000;
       border: none;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 700;
       cursor: pointer;
       transition: opacity 0.15s, transform 0.1s;
@@ -126,123 +116,107 @@
       max-width: 1060px;
     }
 
-    /* ── Problem card ─────────────────────────────────────────────── */
+    /* ── Problem card ────────────────────────────────────────────────── */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 22px 24px;
+      padding: 20px 22px;
       width: 320px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
       animation: fadeUp 0.25s ease both;
     }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(8px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-
-    .card-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
+    .card-header { display: flex; align-items: flex-start; gap: 12px; }
     .card-num {
-      width: 36px; height: 36px;
+      width: 34px; height: 34px;
       border-radius: 8px;
       background: var(--surface2);
       display: grid;
       place-items: center;
       font-weight: 700;
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       color: var(--muted);
       flex-shrink: 0;
     }
     .card-meta { flex: 1; }
-    .card-title {
-      font-weight: 600;
-      font-size: 0.95rem;
-      line-height: 1.35;
-      margin-bottom: 4px;
-    }
-    .card-pid { font-size: 0.75rem; color: var(--muted); }
+    .card-title { font-weight: 600; font-size: 0.92rem; line-height: 1.35; margin-bottom: 4px; }
+    .card-pid   { font-size: 0.73rem; color: var(--muted); display: flex; gap: 5px; flex-wrap: wrap; }
 
     .badge {
       display: inline-block;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 4px;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
-    .badge-easy      { background: #14532d55; color: var(--easy); }
-    .badge-medium    { background: #78350f55; color: var(--medium); }
-    .badge-hard      { background: #7f1d1d55; color: var(--hard); }
-    .badge-reason    { background: #1e3a5f; color: var(--accent2); }
+    .badge-easy   { background: #14532d55; color: var(--easy); }
+    .badge-medium { background: #78350f55; color: var(--medium); }
+    .badge-hard   { background: #7f1d1d55; color: var(--hard); }
+    .badge-reason { background: #1e3a5f;   color: var(--accent2); }
 
-    .card-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
     .tag-pill {
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 20px;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       background: var(--surface2);
       color: var(--muted);
       border: 1px solid var(--border);
     }
 
-    .card-actions { display: flex; gap: 8px; margin-top: auto; }
-
     .card-insight {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       line-height: 1.5;
       color: var(--muted);
       background: var(--surface2);
       border-left: 3px solid var(--accent2);
-      padding: 7px 10px;
+      padding: 6px 10px;
       border-radius: 0 4px 4px 0;
       font-style: italic;
     }
     .card-insight-label {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--accent2);
       display: block;
-      margin-bottom: 3px;
+      margin-bottom: 2px;
       font-style: normal;
     }
 
+    .card-actions { display: flex; gap: 8px; margin-top: auto; }
     .btn-open {
       flex: 1;
-      padding: 9px;
+      padding: 8px;
       border-radius: 6px;
       border: 1px solid var(--border);
       background: transparent;
       color: var(--text);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 500;
       cursor: pointer;
-      transition: background 0.15s;
       text-decoration: none;
       text-align: center;
+      transition: background 0.15s;
     }
     .btn-open:hover { background: var(--surface2); }
-
     .btn-done {
       flex: 1;
-      padding: 9px;
+      padding: 8px;
       border-radius: 6px;
       border: none;
       background: var(--accent);
       color: #000;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
       transition: opacity 0.15s;
@@ -250,287 +224,322 @@
     .btn-done:hover    { opacity: 0.85; }
     .btn-done:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    /* ── Score panel (inside card) ────────────────────────────────── */
+    /* ── Score panel ─────────────────────────────────────────────────── */
     .score-panel {
       border-top: 1px solid var(--border);
-      padding-top: 14px;
+      padding-top: 12px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
-    .score-panel label { font-size: 0.78rem; color: var(--muted); }
-    .score-btns { display: flex; gap: 6px; }
+    .score-panel label { font-size: 0.76rem; color: var(--muted); }
+    .score-btns { display: flex; gap: 5px; }
     .score-btn {
       flex: 1;
-      padding: 7px 4px;
+      padding: 6px 3px;
       border-radius: 6px;
       border: 1px solid var(--border);
       background: var(--surface2);
       color: var(--muted);
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.12s;
       text-align: center;
+      transition: all 0.12s;
     }
-    .score-btn:hover         { border-color: var(--accent); color: var(--text); }
-    .score-btn.selected      { border-color: var(--accent); background: #14532d55; color: var(--accent); }
-    .score-btn[data-score="0"].selected { border-color: var(--hard); background: #7f1d1d55; color: var(--hard); }
+    .score-btn:hover                { border-color: var(--accent); color: var(--text); }
+    .score-btn.selected             { border-color: var(--accent); background: #14532d55; color: var(--accent); }
+    .score-btn[data-score="0"].selected { border-color: var(--hard);   background: #7f1d1d55; color: var(--hard); }
     .score-btn[data-score="1"].selected { border-color: var(--medium); background: #78350f55; color: var(--medium); }
-
     .score-panel input[type="number"],
-    .score-panel input[type="text"],
     .score-panel textarea {
       width: 100%;
-      padding: 7px 10px;
+      padding: 6px 9px;
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 6px;
       color: var(--text);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-family: inherit;
       resize: none;
       outline: none;
-      transition: border-color 0.15s;
     }
     .score-panel input:focus,
     .score-panel textarea:focus { border-color: var(--accent2); }
-
     .btn-submit {
       padding: 8px;
       border-radius: 6px;
       border: none;
       background: var(--accent2);
       color: #000;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 700;
       cursor: pointer;
       transition: opacity 0.15s;
     }
     .btn-submit:hover    { opacity: 0.85; }
     .btn-submit:disabled { opacity: 0.35; cursor: not-allowed; }
-
     .card-done-msg {
       text-align: center;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       color: var(--accent);
-      padding: 8px 0;
+      padding: 6px 0;
     }
 
-    /* ── MAP VIEW ─────────────────────────────────────────────────── */
-    #view-map {
-      flex-direction: row;
-      height: calc(100vh - 56px);
-      overflow: hidden;
-    }
+    /* ── BANK VIEW ───────────────────────────────────────────────────── */
+    #view-bank { padding: 32px 28px; max-width: 900px; width: 100%; margin: 0 auto; gap: 24px; }
 
-    #graph-canvas {
-      flex: 1;
-      /* explicit height required so vis-network can measure on init */
-      height: 100%;
-      min-height: 0;
-      background: var(--bg);
-      position: relative;
-    }
-
-    .map-sidebar {
-      width: 300px;
-      flex-shrink: 0;
+    /* Add problem box */
+    .add-box {
       background: var(--surface);
-      border-left: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 22px;
     }
-
-    .sidebar-section {
-      padding: 18px 20px;
-      border-bottom: 1px solid var(--border);
-    }
-    .sidebar-section h3 {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .legend { display: flex; flex-direction: column; gap: 7px; }
-    .legend-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-    }
-    .legend-dot {
-      width: 12px; height: 12px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-
-    /* node detail pane */
-    .node-detail { flex: 1; overflow-y: auto; padding: 18px 20px; }
-    .node-detail-empty {
-      color: var(--muted);
-      font-size: 0.82rem;
-      text-align: center;
-      margin-top: 40px;
-    }
-    .node-name {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-    .node-stats {
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-bottom: 14px;
-    }
-
-    .insight-wrap { margin-bottom: 14px; }
-    .insight-wrap label { font-size: 0.75rem; color: var(--muted); display: block; margin-bottom: 5px; }
-    .insight-input {
-      width: 100%;
-      padding: 8px 10px;
+    .add-box h2 { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; }
+    .add-row { display: flex; gap: 10px; }
+    .add-input {
+      flex: 1;
+      padding: 9px 12px;
       background: var(--surface2);
       border: 1px solid var(--border);
       border-radius: 6px;
       color: var(--text);
-      font-size: 0.82rem;
-      font-family: inherit;
-      resize: none;
+      font-size: 0.9rem;
       outline: none;
-      transition: border-color 0.15s;
+      font-family: inherit;
     }
-    .insight-input:focus { border-color: var(--accent2); }
-    .btn-save-note {
-      padding: 6px 14px;
+    .add-input:focus { border-color: var(--accent2); }
+    .btn-add {
+      padding: 9px 20px;
       border-radius: 6px;
       border: none;
-      background: var(--accent2);
+      background: var(--accent);
       color: #000;
-      font-size: 0.78rem;
+      font-size: 0.85rem;
       font-weight: 700;
       cursor: pointer;
-      opacity: 0.9;
       transition: opacity 0.15s;
+      white-space: nowrap;
     }
-    .btn-save-note:hover { opacity: 1; }
+    .btn-add:hover    { opacity: 0.88; }
+    .btn-add:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    .node-problems { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
-    .node-problem-item {
+    /* preview row shown after lookup */
+    .add-preview {
+      margin-top: 12px;
+      padding: 10px 12px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      font-size: 0.83rem;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+    .add-preview.visible { display: flex; }
+    .add-preview-title { flex: 1; font-weight: 600; }
+    .add-preview-msg { font-size: 0.78rem; color: var(--hard); margin-top: 8px; display: none; }
+    .add-preview-msg.visible { display: block; }
+
+    /* Bank table */
+    .bank-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 7px 10px;
+    }
+    .bank-header h2 { font-size: 0.95rem; font-weight: 700; }
+    .bank-count     { font-size: 0.8rem; color: var(--muted); }
+
+    .bank-filter {
+      padding: 7px 11px;
       background: var(--surface2);
-      border-radius: 6px;
-      font-size: 0.78rem;
-      gap: 8px;
       border: 1px solid var(--border);
-    }
-    .node-problem-item a {
+      border-radius: 6px;
       color: var(--text);
-      text-decoration: none;
-      flex: 1;
+      font-size: 0.82rem;
+      outline: none;
+      font-family: inherit;
+      width: 200px;
     }
-    .node-problem-item a:hover { color: var(--accent2); }
+    .bank-filter:focus { border-color: var(--accent2); }
+
+    .bank-table-wrap { overflow-x: auto; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.83rem;
+    }
+    thead th {
+      text-align: left;
+      padding: 8px 10px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    thead th:hover { color: var(--text); }
+    thead th.sorted { color: var(--accent2); }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+    tbody tr:hover { background: var(--surface2); }
+    tbody td { padding: 9px 10px; vertical-align: top; }
+    .td-id    { color: var(--muted); white-space: nowrap; font-size: 0.78rem; }
+    .td-title a { color: var(--text); text-decoration: none; font-weight: 500; }
+    .td-title a:hover { color: var(--accent2); }
+    .td-insight { color: var(--muted); font-size: 0.74rem; font-style: italic; margin-top: 3px; }
+    .td-due { white-space: nowrap; font-size: 0.78rem; }
+    .due-overdue  { color: var(--hard); }
+    .due-today    { color: var(--medium); font-weight: 600; }
+    .due-upcoming { color: var(--muted); }
+    .due-never    { color: #444; }
+    .td-actions { white-space: nowrap; }
+    .btn-row-done {
+      padding: 4px 10px;
+      border-radius: 5px;
+      border: none;
+      background: var(--accent);
+      color: #000;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.12s;
+    }
+    .btn-row-done:hover { opacity: 0.8; }
+
+    /* inline score panel inside table row */
+    .row-score-panel {
+      background: var(--surface2);
+      border-top: 1px solid var(--border);
+      padding: 10px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .row-score-panel .score-btns { display: flex; gap: 4px; }
+    .row-score-panel .score-btn {
+      padding: 4px 8px;
+      font-size: 0.7rem;
+    }
+    .row-score-panel .btn-submit {
+      padding: 5px 12px;
+      font-size: 0.75rem;
+    }
+
+    .empty-bank {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.87rem;
+      padding: 40px 0;
+    }
+    .empty-bank p { margin-bottom: 8px; }
   </style>
 </head>
 <body>
 
-<!-- ── Nav ──────────────────────────────────────────────────────────── -->
+<!-- ── Nav ───────────────────────────────────────────────────────────── -->
 <nav>
   <span class="logo">⟳ leetrevive</span>
-  <button class="nav-tab active" data-view="today">Today</button>
-  <button class="nav-tab"        data-view="map">Learning Map</button>
+  <button class="nav-tab active" data-view="today">📅 Today</button>
+  <button class="nav-tab"        data-view="bank">📚 My Bank</button>
   <div class="nav-stats" id="nav-stats"></div>
 </nav>
 
-<!-- ── Today view ───────────────────────────────────────────────────── -->
+<!-- ── Today view ────────────────────────────────────────────────────── -->
 <div class="view active" id="view-today">
   <div class="today-hero">
     <h1>What should I review today?</h1>
-    <p>Problems are picked based on due dates, weak spots, and recent activity.</p>
+    <p>Problems are picked by due date, weak spots, and recent activity.</p>
   </div>
 
-  <button class="btn-generate" id="btn-generate">
-    ⚡ Generate Today's Problems
-  </button>
+  <button class="btn-generate" id="btn-generate">⚡ Generate Today's Problems</button>
 
   <div class="cards-grid" id="cards-grid"></div>
 </div>
 
-<!-- ── Map view ─────────────────────────────────────────────────────── -->
-<div class="view" id="view-map">
-  <div id="graph-canvas"></div>
+<!-- ── Bank view ─────────────────────────────────────────────────────── -->
+<div class="view" id="view-bank">
 
-  <aside class="map-sidebar">
-    <div class="sidebar-section">
-      <h3>Legend</h3>
-      <div class="legend">
-        <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">Mastery</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--strong)"></div>Strong (avg ≥ 2.0)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--developing)"></div>Developing (≥ 1.0)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:var(--weak)"></div>Weak (&lt; 1.0)</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#1e1e1e;border:2px solid #3a3a3a"></div>Not yet reviewed</div>
-        <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:8px 0 4px">Priority Tier</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#1e1e1e;border:3px solid #a78bfa;width:18px;height:18px"></div>🟣 Tier 1 — Foundation</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#1e1e1e;border:3px solid #38bdf8;width:14px;height:14px"></div>🔵 Tier 2 — FAANG Standard</div>
-        <div class="legend-item"><div class="legend-dot" style="background:#1e1e1e;border:2px solid #fb923c;width:11px;height:11px"></div>🟠 Tier 3 — Differentiators</div>
-        <div style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin:8px 0 4px">Shape</div>
-        <div class="legend-item"><div style="width:12px;height:12px;background:#3a3a3a;border-radius:50%"></div>Data Structure</div>
-        <div class="legend-item"><div style="width:12px;height:12px;background:#3a3a3a;transform:rotate(45deg)"></div>⚡ Algorithm Pattern</div>
+  <!-- Add problem -->
+  <div class="add-box">
+    <h2>➕ Add a Problem</h2>
+    <div class="add-row">
+      <input class="add-input" id="add-input" type="text"
+             placeholder="Problem ID (e.g. 146)  or  Title keywords"
+             autocomplete="off" />
+      <button class="btn-add" id="btn-add">Add</button>
+    </div>
+    <div class="add-preview" id="add-preview">
+      <span class="add-preview-title" id="add-preview-title"></span>
+      <span id="add-preview-diff"></span>
+    </div>
+    <div class="add-preview-msg" id="add-preview-msg"></div>
+  </div>
+
+  <!-- Problem bank -->
+  <div>
+    <div class="bank-header" style="margin-bottom:12px">
+      <h2>My Bank <span class="bank-count" id="bank-count"></span></h2>
+      <input class="bank-filter" id="bank-filter" type="text" placeholder="Filter…" />
+    </div>
+    <div class="bank-table-wrap">
+      <table id="bank-table">
+        <thead>
+          <tr>
+            <th data-col="problem_id">#</th>
+            <th data-col="title">Title</th>
+            <th data-col="difficulty">Diff</th>
+            <th data-col="next_due_at">Next Due</th>
+            <th data-col="review_count">Reviews</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="bank-tbody"></tbody>
+      </table>
+      <div class="empty-bank" id="bank-empty" style="display:none">
+        <p>No problems yet.</p>
+        <p>Add some above — just type a problem number like <b>1</b>, <b>146</b>, or <b>200</b>.</p>
       </div>
     </div>
-
-    <div class="node-detail" id="node-detail">
-      <p class="node-detail-empty">Click a node to see details</p>
-    </div>
-  </aside>
+  </div>
 </div>
 
 <script>
-// ── Helpers ─────────────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
-const DIFF_BADGE = d => d
-  ? `<span class="badge badge-${d}">${d}</span>`
-  : '';
+const DIFF_BADGE = d => d ? `<span class="badge badge-${d}">${d}</span>` : '';
 
-// ── Nav ─────────────────────────────────────────────────────────────────
+// ── Nav tabs ──────────────────────────────────────────────────────────────
 document.querySelectorAll('.nav-tab').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     btn.classList.add('active');
     $('view-' + btn.dataset.view).classList.add('active');
-    if (btn.dataset.view === 'map') {
-      if (!mapInitialised) {
-        initMap();
-      } else if (window._visNetwork) {
-        // re-fit whenever user switches back to the map tab
-        setTimeout(() => window._visNetwork.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } }), 50);
-      }
-    }
+    if (btn.dataset.view === 'bank') loadBank();
   });
 });
 
-// ── Load nav stats ───────────────────────────────────────────────────────
+// ── Nav stats ─────────────────────────────────────────────────────────────
 async function loadStats() {
   try {
     const s = await fetch('/api/stats').then(r => r.json());
     $('nav-stats').innerHTML = `
       <span><b>${s.total_problems}</b> problems</span>
       <span><b>${s.total_reviews}</b> reviews</span>
-      <span class="${s.overdue > 0 ? 'overdue' : ''}">
-        <b>${s.overdue}</b> overdue
-      </span>
+      <span class="${s.overdue > 0 ? 'overdue' : ''}"><b>${s.overdue}</b> overdue</span>
     `;
   } catch(e) {}
 }
 loadStats();
 
-// ── TODAY: generate cards ────────────────────────────────────────────────
+// ── TODAY ─────────────────────────────────────────────────────────────────
 const btnGen  = $('btn-generate');
 const cardsEl = $('cards-grid');
 
@@ -541,14 +550,12 @@ btnGen.addEventListener('click', async () => {
   try {
     const data = await fetch('/api/today').then(r => r.json());
     if (!data.picks.length) {
-      cardsEl.innerHTML = `<p style="color:var(--muted);font-size:.9rem">
-        🎉 Nothing due today — you're all caught up!
-      </p>`;
+      cardsEl.innerHTML = `<p style="color:var(--muted);font-size:.9rem">🎉 Nothing due today — you're all caught up!</p>`;
     } else {
       data.picks.forEach((p, i) => cardsEl.appendChild(buildCard(p, i + 1)));
     }
   } catch(e) {
-    cardsEl.innerHTML = `<p style="color:var(--hard)">Error loading picks. Is the server running?</p>`;
+    cardsEl.innerHTML = `<p style="color:var(--hard)">Error loading picks.</p>`;
   } finally {
     btnGen.disabled = false;
     btnGen.textContent = '⚡ Generate Today\'s Problems';
@@ -558,11 +565,8 @@ btnGen.addEventListener('click', async () => {
 function buildCard(p, n) {
   const card = document.createElement('div');
   card.className = 'card';
-  card.style.animationDelay = `${(n-1) * 0.07}s`;
-
-  const tagPills = p.tags.slice(0,5)
-    .map(t => `<span class="tag-pill">${t}</span>`).join('');
-
+  card.style.animationDelay = `${(n - 1) * 0.07}s`;
+  const tagPills = (p.tags || []).slice(0, 5).map(t => `<span class="tag-pill">${t}</span>`).join('');
   card.innerHTML = `
     <div class="card-header">
       <div class="card-num">#${p.problem_id}</div>
@@ -574,37 +578,22 @@ function buildCard(p, n) {
         </div>
       </div>
     </div>
-
-    <div class="card-tags">${tagPills}</div>
-
-    ${p.insight ? `
-    <div class="card-insight">
-      <span class="card-insight-label">💡 Key insight</span>
-      ${p.insight}
-    </div>` : ''}
-
-    <div>
-      <span class="badge badge-reason">${p.reason}</span>
-    </div>
-
+    ${tagPills ? `<div class="card-tags">${tagPills}</div>` : ''}
+    ${p.insight ? `<div class="card-insight"><span class="card-insight-label">💡 Key insight</span>${p.insight}</div>` : ''}
+    <div><span class="badge badge-reason">${p.reason}</span></div>
     <div class="card-actions">
-      <a class="btn-open" href="${p.url || '#'}" target="_blank" rel="noopener">
-        Open LeetCode ↗
-      </a>
-      <button class="btn-done" data-pid="${p.problem_id}">Mark Done</button>
+      <a class="btn-open" href="${p.url || '#'}" target="_blank" rel="noopener">Open LeetCode ↗</a>
+      <button class="btn-done">Mark Done</button>
     </div>
   `;
-
   card.querySelector('.btn-done').addEventListener('click', function() {
     this.style.display = 'none';
-    const panel = buildScorePanel(p.problem_id, card);
-    card.appendChild(panel);
+    card.appendChild(buildScorePanel(p.problem_id));
   });
-
   return card;
 }
 
-function buildScorePanel(pid, card) {
+function buildScorePanel(pid, onDone) {
   const panel = document.createElement('div');
   panel.className = 'score-panel';
   panel.innerHTML = `
@@ -616,13 +605,11 @@ function buildScorePanel(pid, card) {
       <button class="score-btn" data-score="3">3<br><small>Clean</small></button>
     </div>
     <input type="number" class="inp-minutes" placeholder="Minutes spent (optional)" min="1" max="999" />
-    <textarea class="inp-note" rows="2" placeholder="Note (optional)"></textarea>
-    <textarea class="inp-mistake" rows="2" placeholder="Mistake / what to remember (optional)"></textarea>
+    <textarea class="inp-note"    rows="2" placeholder="Note (optional)"></textarea>
+    <textarea class="inp-mistake" rows="2" placeholder="Mistake to remember (optional)"></textarea>
     <button class="btn-submit" disabled>Submit</button>
   `;
-
   let selectedScore = null;
-
   panel.querySelectorAll('.score-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       panel.querySelectorAll('.score-btn').forEach(b => b.classList.remove('selected'));
@@ -631,239 +618,218 @@ function buildScorePanel(pid, card) {
       panel.querySelector('.btn-submit').disabled = false;
     });
   });
-
   panel.querySelector('.btn-submit').addEventListener('click', async () => {
-    const body = {
-      problem_id: pid,
-      score:      selectedScore,
-      minutes:    parseInt(panel.querySelector('.inp-minutes').value) || null,
-      note:       panel.querySelector('.inp-note').value.trim() || null,
-      mistake:    panel.querySelector('.inp-mistake').value.trim() || null,
-    };
     panel.querySelector('.btn-submit').disabled = true;
     try {
       const res = await fetch('/api/done', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          problem_id: pid,
+          score:      selectedScore,
+          minutes:    parseInt(panel.querySelector('.inp-minutes').value) || null,
+          note:       panel.querySelector('.inp-note').value.trim() || null,
+          mistake:    panel.querySelector('.inp-mistake').value.trim() || null,
+        }),
       }).then(r => r.json());
-      panel.innerHTML = `
-        <div class="card-done-msg">
-          ✓ Recorded — next due <b>${res.next_due_at}</b>
-          &nbsp;·&nbsp; review #${res.review_count}
-        </div>`;
+      panel.innerHTML = `<div class="card-done-msg">✓ Recorded — next due <b>${res.next_due_at}</b> · review #${res.review_count}</div>`;
       loadStats();
+      if (onDone) onDone();
     } catch(e) {
       panel.querySelector('.btn-submit').disabled = false;
       alert('Error saving review.');
     }
   });
-
   return panel;
 }
 
-// ── MAP: vis-network graph ───────────────────────────────────────────────
-let mapInitialised = false;
-let graphData = null;
+// ── BANK ──────────────────────────────────────────────────────────────────
+let bankData = [];
+let sortCol  = 'next_due_at';
+let sortAsc  = true;
 
-async function initMap() {
-  mapInitialised = true;
-
-  // Show loading state
-  const container = $('graph-canvas');
-  container.innerHTML = '<div style="display:grid;place-items:center;height:100%;color:#666;font-size:.85rem">Loading map…</div>';
-
-  let raw;
+async function loadBank() {
   try {
-    raw = await fetch('/api/graph').then(r => r.json());
-  } catch(e) {
-    container.innerHTML = '<div style="display:grid;place-items:center;height:100%;color:#f87171;font-size:.85rem">Failed to load graph</div>';
+    const res = await fetch('/api/bank').then(r => r.json());
+    bankData = res.problems;
+    renderBank();
+  } catch(e) {}
+}
+
+function renderBank() {
+  const filter = $('bank-filter').value.toLowerCase();
+  let rows = bankData.filter(p =>
+    !filter ||
+    p.problem_id.includes(filter) ||
+    p.title.toLowerCase().includes(filter) ||
+    (p.difficulty || '').toLowerCase().includes(filter) ||
+    (p.tags || []).some(t => t.includes(filter))
+  );
+
+  // Sort
+  rows.sort((a, b) => {
+    let va = a[sortCol], vb = b[sortCol];
+    if (va === null || va === undefined) va = sortAsc ? 'zzz' : '';
+    if (vb === null || vb === undefined) vb = sortAsc ? 'zzz' : '';
+    if (sortCol === 'review_count' || sortCol === 'avg_score') {
+      va = parseFloat(va) || 0; vb = parseFloat(vb) || 0;
+    }
+    return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
+  });
+
+  $('bank-count').textContent = `(${rows.length})`;
+  const tbody = $('bank-tbody');
+  tbody.innerHTML = '';
+  $('bank-empty').style.display = rows.length === 0 ? 'block' : 'none';
+
+  const today = new Date().toISOString().slice(0, 10);
+
+  rows.forEach(p => {
+    const tr = document.createElement('tr');
+
+    // due date display
+    let dueCell = '<span class="due-never">—</span>';
+    if (p.next_due_at) {
+      if (p.next_due_at < today)
+        dueCell = `<span class="due-overdue">overdue</span>`;
+      else if (p.next_due_at === today)
+        dueCell = `<span class="due-today">today</span>`;
+      else
+        dueCell = `<span class="due-upcoming">${p.next_due_at}</span>`;
+    }
+
+    tr.innerHTML = `
+      <td class="td-id">#${p.problem_id}</td>
+      <td class="td-title">
+        <a href="${p.url || '#'}" target="_blank" rel="noopener">${p.title}</a>
+        ${p.insight ? `<div class="td-insight">${p.insight}</div>` : ''}
+      </td>
+      <td>${DIFF_BADGE(p.difficulty)}</td>
+      <td class="td-due">${dueCell}</td>
+      <td style="color:var(--muted);font-size:.78rem">${p.review_count || 0}${p.avg_score !== null && p.avg_score !== undefined ? ` · avg ${p.avg_score}` : ''}</td>
+      <td class="td-actions"><button class="btn-row-done">Done</button></td>
+    `;
+
+    // inline "Done" from bank row
+    tr.querySelector('.btn-row-done').addEventListener('click', function() {
+      // If a panel already open on this row, remove it
+      const existing = tr.nextSibling;
+      if (existing && existing.classList && existing.classList.contains('score-row')) {
+        existing.remove();
+        this.textContent = 'Done';
+        return;
+      }
+      this.textContent = '✕';
+      const panelRow = document.createElement('tr');
+      panelRow.className = 'score-row';
+      const td = document.createElement('td');
+      td.colSpan = 6;
+      const panel = buildScorePanel(p.problem_id, () => {
+        panelRow.remove();
+        tr.querySelector('.btn-row-done').textContent = 'Done';
+        loadBank(); // refresh next_due
+      });
+      panel.className = 'row-score-panel';
+      td.appendChild(panel);
+      panelRow.appendChild(td);
+      tr.after(panelRow);
+    });
+
+    tbody.appendChild(tr);
+  });
+
+  // Update sort header highlights
+  document.querySelectorAll('#bank-table thead th').forEach(th => {
+    th.classList.toggle('sorted', th.dataset.col === sortCol);
+  });
+}
+
+$('bank-filter').addEventListener('input', renderBank);
+
+document.querySelectorAll('#bank-table thead th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    if (sortCol === th.dataset.col) sortAsc = !sortAsc;
+    else { sortCol = th.dataset.col; sortAsc = true; }
+    renderBank();
+  });
+});
+
+// ── ADD PROBLEM ───────────────────────────────────────────────────────────
+const addInput   = $('add-input');
+const btnAdd     = $('btn-add');
+const addPreview = $('add-preview');
+const addMsg     = $('add-preview-msg');
+let   previewPid = null;
+let   lookupTimer = null;
+
+addInput.addEventListener('input', () => {
+  clearTimeout(lookupTimer);
+  const val = addInput.value.trim();
+  if (!val || !/^\d+$/.test(val)) {
+    addPreview.classList.remove('visible');
+    addMsg.classList.remove('visible');
+    previewPid = null;
     return;
   }
-  graphData = raw;
-  container.innerHTML = ''; // clear loading state
+  lookupTimer = setTimeout(() => lookupPreview(val), 350);
+});
 
-  const COLOR = {
-    strong:     { bg: '#14532d', border: '#4ade80', font: '#e2e2e2' },
-    developing: { bg: '#78350f', border: '#fbbf24', font: '#e2e2e2' },
-    weak:       { bg: '#7f1d1d', border: '#f87171', font: '#e2e2e2' },
-    unreviewed: { bg: '#1e1e1e', border: '#3a3a3a', font: '#888'    },
-  };
+addInput.addEventListener('keydown', e => {
+  if (e.key === 'Enter') doAdd();
+});
+btnAdd.addEventListener('click', doAdd);
 
-  // Tier accent colours (used as border overlay on top of mastery colour)
-  const TIER_BORDER = { tier1: '#a78bfa', tier2: '#38bdf8', tier3: '#fb923c', user: '#6b7280' };
-
-  const visNodes = new vis.DataSet(raw.nodes.map(n => {
-    const c = COLOR[n.mastery];
-
-    // Node size: tier1 largest, scale by interview freq when available
-    const freqBonus = (n.freq || 3) * 3;            // 3-15 px bonus
-    const tierBase  = n.group === 'tier1' ? 28
-                    : n.group === 'tier2' ? 22
-                    : n.group === 'tier3' ? 17 : 14;
-    const size = tierBase + freqBonus + Math.min(n.problem_count * 2, 10);
-
-    // Border: use tier colour when unreviewed, mastery colour otherwise
-    const borderColor = n.mastery === 'unreviewed'
-      ? (TIER_BORDER[n.group] || '#3a3a3a')
-      : c.border;
-
-    return {
-      id:    n.id,
-      label: n.label,
-      title: buildTooltip(n),
-      color: {
-        background: c.bg,
-        border:     borderColor,
-        highlight:  { background: c.bg, border: '#ffffff' },
-        hover:      { background: c.bg, border: '#ffffff' },
-      },
-      font:        { color: c.font, size: n.group === 'tier1' ? 15 : n.group === 'tier2' ? 13 : 12, bold: n.group !== 'user' },
-      size,
-      shape:       n.is_pattern ? 'diamond' : 'dot',
-      borderWidth: n.group === 'tier1' ? 4 : n.group === 'tier2' ? 3 : 2,
-      mass:        n.group === 'tier1' ? 3 : n.group === 'tier2' ? 2 : 1,
-    };
-  }));
-
-  const visEdges = new vis.DataSet(raw.edges.map((e, i) => ({
-    id:     i,
-    from:   e.from,
-    to:     e.to,
-    color:  { color: '#2d2d2d', highlight: '#4ade8088', hover: '#4ade8088' },
-    width:  1,
-    smooth: { type: 'curvedCW', roundness: 0.1 },
-    arrows: { to: { enabled: false } },
-  })));
-
-  const network = new vis.Network(
-    container,
-    { nodes: visNodes, edges: visEdges },
-    {
-      physics: {
-        enabled: true,
-        solver: 'forceAtlas2Based',
-        forceAtlas2Based: {
-          gravitationalConstant: -80,
-          centralGravity:        0.01,
-          springLength:          140,
-          springConstant:        0.08,
-          damping:               0.4,
-        },
-        stabilization: {
-          enabled:   true,
-          iterations: 300,
-          updateInterval: 25,
-        },
-      },
-      interaction: {
-        hover:        true,
-        tooltipDelay: 150,
-        zoomView:     true,
-        dragView:     true,
-      },
-      nodes: {
-        borderWidthSelected: 3,
-      },
-      edges: {
-        selectionWidth: 2,
-      },
-    }
-  );
-
-  // Store globally so the nav tab can call fit() when switching back
-  window._visNetwork = network;
-
-  // Once physics settles, fit all nodes into view
-  network.once('stabilizationIterationsDone', () => {
-    network.setOptions({ physics: { enabled: false } });
-    network.fit({ animation: { duration: 600, easingFunction: 'easeInOutQuad' } });
-  });
-
-  network.on('click', params => {
-    if (params.nodes.length) {
-      renderNodeDetail(params.nodes[0]);
+async function lookupPreview(pid) {
+  try {
+    const meta = await fetch(`/api/search/${pid}`).then(r => r.json());
+    previewPid = pid;
+    $('add-preview-title').textContent = `#${meta.problem_id} ${meta.title}`;
+    $('add-preview-diff').innerHTML = DIFF_BADGE(meta.difficulty);
+    addPreview.classList.add('visible');
+    if (meta.in_bank) {
+      addMsg.textContent = 'Already in your bank.';
+      addMsg.style.color = 'var(--medium)';
+      addMsg.classList.add('visible');
+      btnAdd.disabled = true;
     } else {
-      $('node-detail').innerHTML = '<p class="node-detail-empty">Click a node to see details</p>';
+      addMsg.classList.remove('visible');
+      btnAdd.disabled = false;
     }
-  });
+  } catch(e) {
+    addPreview.classList.remove('visible');
+    addMsg.classList.remove('visible');
+    previewPid = null;
+  }
 }
 
-function buildTooltip(n) {
-  // Return plain HTML string — vis-network renders it in its own tooltip div.
-  const TIER_LABEL = { tier1: '🟣 Tier 1 — Foundation', tier2: '🔵 Tier 2 — FAANG Standard', tier3: '🟠 Tier 3 — Differentiator', user: '👤 User Tag' };
-  const FREQ_STARS = n.freq ? '★'.repeat(n.freq) + '☆'.repeat(5 - n.freq) : null;
-  const lines = [
-    `<b style="color:#e2e2e2">${n.label}</b>`,
-  ];
-  if (TIER_LABEL[n.group]) lines.push(`<span style="color:#aaa;font-size:11px">${TIER_LABEL[n.group]}</span>`);
-  if (FREQ_STARS)          lines.push(`<span style="color:#fbbf24;font-size:11px">Interview freq: ${FREQ_STARS}</span>`);
-  lines.push(`<span style="color:#888">${n.problem_count} problem${n.problem_count !== 1 ? 's' : ''} in bank</span>`);
-  if (n.avg_score !== null) lines.push(`<span style="color:#aaa">avg score: ${n.avg_score} / 3</span>`);
-  if (n.note) lines.push(`<span style="color:#22d3ee;font-style:italic;max-width:200px;display:block">${n.note}</span>`);
-  return `<div style="background:#1a1a1a;border:1px solid #333;padding:8px 12px;border-radius:6px;font-size:12px;max-width:240px;line-height:1.6;font-family:sans-serif">${lines.join('<br>')}</div>`;
-}
-
-async function renderNodeDetail(nodeId) {
-  const n = graphData.nodes.find(x => x.id === nodeId);
-  if (!n) return;
-
-  const bank = await fetch('/api/bank').then(r => r.json());
-  const problems = bank.problems.filter(p =>
-    n.problem_ids.includes(p.problem_id)
-  );
-
-  const detail = $('node-detail');
-  const masteryColor = { strong: 'var(--strong)', developing: 'var(--developing)', weak: 'var(--hard)', unreviewed: 'var(--unreviewed)' }[n.mastery];
-  const TIER_LABEL = { tier1: '🟣 Tier 1 · Foundation', tier2: '🔵 Tier 2 · FAANG Standard', tier3: '🟠 Tier 3 · Differentiator' };
-  const freqStars  = n.freq ? ('★'.repeat(n.freq) + '☆'.repeat(5 - n.freq)) : null;
-
-  detail.innerHTML = `
-    <div class="node-name">${n.is_pattern ? '⚡ ' : ''}${n.label}</div>
-    ${n.group && TIER_LABEL[n.group] ? `<div style="font-size:.75rem;color:var(--muted);margin-bottom:2px">${TIER_LABEL[n.group]}</div>` : ''}
-    ${freqStars ? `<div style="font-size:.75rem;color:#fbbf24;margin-bottom:6px">Interview freq: ${freqStars}</div>` : ''}
-    <div class="node-stats" style="color:${masteryColor}">
-      ${n.mastery} · ${n.problem_count} problem${n.problem_count !== 1 ? 's' : ''}
-      ${n.avg_score !== null ? ` · avg ${n.avg_score}` : ''}
-    </div>
-
-    <div class="insight-wrap">
-      <label>Key insight</label>
-      <textarea class="insight-input" id="insight-input" rows="3"
-        placeholder="One sentence about this topic…">${n.note || ''}</textarea>
-      <br><br>
-      <button class="btn-save-note" id="btn-save-note">Save</button>
-      <span id="save-ok" style="font-size:.75rem;color:var(--accent);margin-left:8px;display:none">✓ saved</span>
-    </div>
-
-    <div style="font-size:.75rem;color:var(--muted);margin-bottom:6px;">Problems in bank</div>
-    <div class="node-problems">
-      ${problems.length === 0
-        ? `<div style="color:var(--muted);font-size:.8rem;font-style:italic">No problems added yet for this topic.</div>`
-        : problems.map(p => `
-        <div class="node-problem-item">
-          <a href="${p.url || '#'}" target="_blank" rel="noopener">
-            #${p.problem_id} ${p.title}
-          </a>
-          ${DIFF_BADGE(p.difficulty)}
-          ${p.insight ? `<div style="font-size:.72rem;color:#888;font-style:italic;margin-top:3px;padding-left:2px">${p.insight}</div>` : ''}
-        </div>
-      `).join('')}
-    </div>
-  `;
-
-  $('btn-save-note').addEventListener('click', async () => {
-    const note = $('insight-input').value.trim();
-    await fetch('/api/notes/' + encodeURIComponent(nodeId), {
-      method: 'PUT',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ note }),
-    });
-    // Update local cache so tooltip reflects new note
-    n.note = note;
-    $('save-ok').style.display = 'inline';
-    setTimeout(() => { $('save-ok').style.display = 'none'; }, 2000);
-  });
+async function doAdd() {
+  const val = addInput.value.trim();
+  if (!val) return;
+  btnAdd.disabled = true;
+  btnAdd.textContent = '…';
+  try {
+    const res = await fetch('/api/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ problem_id: val }),
+    }).then(r => r.json());
+    addMsg.textContent = `✓ Added: #${res.problem_id} ${res.title}`;
+    addMsg.style.color = 'var(--accent)';
+    addMsg.classList.add('visible');
+    addInput.value = '';
+    addPreview.classList.remove('visible');
+    previewPid = null;
+    loadStats();
+    loadBank();
+  } catch(e) {
+    const err = await e.response?.json().catch(() => null);
+    addMsg.textContent = err?.detail || 'Error adding problem.';
+    addMsg.style.color = 'var(--hard)';
+    addMsg.classList.add('visible');
+  } finally {
+    btnAdd.textContent = 'Add';
+    btnAdd.disabled = false;
+  }
 }
 </script>
 </body>

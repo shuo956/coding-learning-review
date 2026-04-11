@@ -24,7 +24,8 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
 from .. import db
-from ..meta import get_insight
+from ..meta import get_insight, lookup as meta_lookup
+from ..models import Problem
 from ..scheduler import pick_today
 
 # ---------------------------------------------------------------------------
@@ -446,6 +447,80 @@ def api_stats() -> dict:
         "total_reviews":  len(reviews),
         "due_today":      due_today,
         "overdue":        overdue,
+    }
+
+
+# ---------------------------------------------------------------------------
+# /api/add
+# ---------------------------------------------------------------------------
+
+class AddRequest(BaseModel):
+    problem_id: str
+    title:      Optional[str] = None
+    difficulty: Optional[str] = None
+    url:        Optional[str] = None
+
+
+@app.post("/api/add")
+def api_add(body: AddRequest) -> dict:
+    pid = body.problem_id.strip()
+    if not pid:
+        raise HTTPException(status_code=422, detail="problem_id required")
+
+    # Already in bank?
+    if db.get_problem(pid):
+        raise HTTPException(status_code=409, detail=f"Problem {pid} already in bank")
+
+    # Fill from bundled meta if not provided
+    meta = meta_lookup(pid)
+    title      = body.title      or (meta.title      if meta else None)
+    difficulty = body.difficulty or (meta.difficulty if meta else None)
+    url        = body.url        or (meta.url        if meta else f"https://leetcode.com/problems/{pid}/")
+
+    if not title:
+        raise HTTPException(status_code=404, detail=f"Problem {pid} not found in metadata — provide a title")
+
+    from datetime import timezone
+    now = datetime.now(tz=timezone.utc)
+    problem = Problem(
+        problem_id=pid,
+        title=title,
+        difficulty=difficulty or "medium",
+        tags=meta.tags if meta else [],
+        pattern=None,
+        source="web",
+        url=url,
+        created_at=now,
+    )
+    db.insert_problem(problem)
+    return {
+        "ok":         True,
+        "problem_id": pid,
+        "title":      title,
+        "difficulty": difficulty or "medium",
+        "url":        url,
+        "insight":    get_insight(pid),
+    }
+
+
+# ---------------------------------------------------------------------------
+# /api/search  — meta lookup without adding to bank
+# ---------------------------------------------------------------------------
+
+@app.get("/api/search/{problem_id}")
+def api_search(problem_id: str) -> dict:
+    meta = meta_lookup(problem_id)
+    if not meta:
+        raise HTTPException(status_code=404, detail=f"Problem {problem_id} not in bundled metadata")
+    in_bank = db.get_problem(problem_id) is not None
+    return {
+        "problem_id": meta.problem_id,
+        "title":      meta.title,
+        "difficulty": meta.difficulty,
+        "tags":       meta.tags,
+        "url":        meta.url,
+        "insight":    get_insight(problem_id),
+        "in_bank":    in_bank,
     }
 
 

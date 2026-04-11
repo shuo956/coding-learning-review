@@ -6,7 +6,6 @@
   <title>leetrevive</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --bg:       #0d0d0d;
       --surface:  #161616;
@@ -21,9 +20,8 @@
       --hard:     #f87171;
       --radius:   10px;
     }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -31,12 +29,12 @@
       flex-direction: column;
     }
 
-    /* ── Nav ─────────────────────────────────────────────────────────── */
+    /* ── Nav ──────────────────────────────────────────────────────── */
     nav {
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 0 24px;
+      padding: 0 20px;
       height: 52px;
       background: var(--surface);
       border-bottom: 1px solid var(--border);
@@ -45,87 +43,67 @@
       z-index: 100;
       flex-shrink: 0;
     }
-    .logo {
-      font-weight: 700;
-      font-size: 1rem;
-      color: var(--accent);
-      letter-spacing: -0.5px;
-      margin-right: 16px;
-    }
+    .logo { font-weight: 700; font-size: 1rem; color: var(--accent); letter-spacing: -0.5px; margin-right: 12px; }
     .nav-tab {
-      padding: 5px 14px;
-      border-radius: 6px;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s;
+      padding: 5px 13px; border-radius: 6px; border: none;
+      background: transparent; color: var(--muted);
+      font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.15s;
     }
     .nav-tab:hover  { color: var(--text); background: var(--surface2); }
     .nav-tab.active { color: var(--text); background: var(--surface2); }
-    .nav-stats {
-      margin-left: auto;
-      display: flex;
-      gap: 18px;
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
+
+    .nav-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+    .nav-stats { display: flex; gap: 16px; font-size: 0.78rem; color: var(--muted); }
     .nav-stats span b { color: var(--text); }
     .nav-stats .overdue b { color: var(--hard); }
 
-    /* ── Views ────────────────────────────────────────────────────────── */
+    /* Language toggle */
+    .lang-toggle {
+      display: flex;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .lang-btn {
+      padding: 4px 10px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .lang-btn.active { background: var(--surface2); color: var(--text); }
+    .lang-btn:hover:not(.active) { color: var(--text); }
+
+    /* ── Views ────────────────────────────────────────────────────── */
     .view { display: none; flex: 1; flex-direction: column; }
     .view.active { display: flex; }
 
-    /* ── TODAY VIEW ───────────────────────────────────────────────────── */
-    #view-today {
-      align-items: center;
-      padding: 40px 24px;
-      gap: 28px;
-    }
+    /* ── TODAY VIEW ───────────────────────────────────────────────── */
+    #view-today { align-items: center; padding: 40px 24px; gap: 28px; }
     .today-hero { text-align: center; }
     .today-hero h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
     .today-hero p  { color: var(--muted); font-size: 0.87rem; }
 
     .btn-generate {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 28px;
-      background: var(--accent);
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.15s, transform 0.1s;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 28px; background: var(--accent); color: #000;
+      border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: opacity 0.15s, transform 0.1s;
     }
     .btn-generate:hover    { opacity: 0.9; }
     .btn-generate:active   { transform: scale(0.98); }
     .btn-generate:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    .cards-grid {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
-      max-width: 1060px;
-    }
+    .cards-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 1060px; }
 
-    /* ── Problem card ────────────────────────────────────────────────── */
+    /* ── Card ─────────────────────────────────────────────────────── */
     .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 22px;
-      width: 320px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 22px;
+      width: 320px; display: flex; flex-direction: column; gap: 12px;
       animation: fadeUp 0.25s ease both;
     }
     @keyframes fadeUp {
@@ -134,28 +112,17 @@
     }
     .card-header { display: flex; align-items: flex-start; gap: 12px; }
     .card-num {
-      width: 34px; height: 34px;
-      border-radius: 8px;
-      background: var(--surface2);
-      display: grid;
-      place-items: center;
-      font-weight: 700;
-      font-size: 0.82rem;
-      color: var(--muted);
-      flex-shrink: 0;
+      width: 34px; height: 34px; border-radius: 8px; background: var(--surface2);
+      display: grid; place-items: center; font-weight: 700;
+      font-size: 0.82rem; color: var(--muted); flex-shrink: 0;
     }
     .card-meta { flex: 1; }
     .card-title { font-weight: 600; font-size: 0.92rem; line-height: 1.35; margin-bottom: 4px; }
     .card-pid   { font-size: 0.73rem; color: var(--muted); display: flex; gap: 5px; flex-wrap: wrap; }
 
     .badge {
-      display: inline-block;
-      padding: 2px 7px;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+      display: inline-block; padding: 2px 7px; border-radius: 4px;
+      font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
     }
     .badge-easy   { background: #14532d55; color: var(--easy); }
     .badge-medium { background: #78350f55; color: var(--medium); }
@@ -164,282 +131,155 @@
 
     .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
     .tag-pill {
-      padding: 2px 7px;
-      border-radius: 20px;
-      font-size: 0.68rem;
-      background: var(--surface2);
-      color: var(--muted);
-      border: 1px solid var(--border);
+      padding: 2px 7px; border-radius: 20px; font-size: 0.68rem;
+      background: var(--surface2); color: var(--muted); border: 1px solid var(--border);
     }
-
     .card-insight {
-      font-size: 0.78rem;
-      line-height: 1.5;
-      color: var(--muted);
-      background: var(--surface2);
-      border-left: 3px solid var(--accent2);
-      padding: 6px 10px;
-      border-radius: 0 4px 4px 0;
-      font-style: italic;
+      font-size: 0.78rem; line-height: 1.5; color: var(--muted);
+      background: var(--surface2); border-left: 3px solid var(--accent2);
+      padding: 6px 10px; border-radius: 0 4px 4px 0; font-style: italic;
     }
     .card-insight-label {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--accent2);
-      display: block;
-      margin-bottom: 2px;
-      font-style: normal;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--accent2); display: block;
+      margin-bottom: 2px; font-style: normal;
     }
 
-    .card-actions { display: flex; gap: 8px; margin-top: auto; }
-    .btn-open {
-      flex: 1;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text);
-      font-size: 0.8rem;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: none;
-      text-align: center;
-      transition: background 0.15s;
+    .card-actions { display: flex; gap: 7px; margin-top: auto; flex-wrap: wrap; }
+    .btn-lc {
+      flex: 1; padding: 8px 6px; border-radius: 6px; border: 1px solid var(--border);
+      background: transparent; color: var(--text); font-size: 0.78rem; font-weight: 500;
+      cursor: pointer; text-decoration: none; text-align: center; transition: background 0.15s;
+      white-space: nowrap;
     }
-    .btn-open:hover { background: var(--surface2); }
+    .btn-lc:hover { background: var(--surface2); }
+    .btn-lc.cn    { border-color: #e44d2655; color: #e87a5d; }
+    .btn-lc.cn:hover { background: #e44d2615; }
     .btn-done {
-      flex: 1;
-      padding: 8px;
-      border-radius: 6px;
-      border: none;
-      background: var(--accent);
-      color: #000;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.15s;
+      flex: 1; padding: 8px; border-radius: 6px; border: none;
+      background: var(--accent); color: #000; font-size: 0.8rem; font-weight: 700;
+      cursor: pointer; transition: opacity 0.15s;
     }
     .btn-done:hover    { opacity: 0.85; }
     .btn-done:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    /* ── Score panel ─────────────────────────────────────────────────── */
+    /* ── Score panel ──────────────────────────────────────────────── */
     .score-panel {
-      border-top: 1px solid var(--border);
-      padding-top: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      border-top: 1px solid var(--border); padding-top: 12px;
+      display: flex; flex-direction: column; gap: 8px;
     }
     .score-panel label { font-size: 0.76rem; color: var(--muted); }
     .score-btns { display: flex; gap: 5px; }
     .score-btn {
-      flex: 1;
-      padding: 6px 3px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--surface2);
-      color: var(--muted);
-      font-size: 0.73rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.12s;
+      flex: 1; padding: 6px 3px; border-radius: 6px; border: 1px solid var(--border);
+      background: var(--surface2); color: var(--muted); font-size: 0.72rem; font-weight: 600;
+      cursor: pointer; text-align: center; transition: all 0.12s;
     }
-    .score-btn:hover                { border-color: var(--accent); color: var(--text); }
-    .score-btn.selected             { border-color: var(--accent); background: #14532d55; color: var(--accent); }
+    .score-btn:hover                    { border-color: var(--accent); color: var(--text); }
+    .score-btn.selected                 { border-color: var(--accent); background: #14532d55; color: var(--accent); }
     .score-btn[data-score="0"].selected { border-color: var(--hard);   background: #7f1d1d55; color: var(--hard); }
     .score-btn[data-score="1"].selected { border-color: var(--medium); background: #78350f55; color: var(--medium); }
     .score-panel input[type="number"],
     .score-panel textarea {
-      width: 100%;
-      padding: 6px 9px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      font-size: 0.78rem;
-      font-family: inherit;
-      resize: none;
-      outline: none;
+      width: 100%; padding: 6px 9px; background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 6px; color: var(--text);
+      font-size: 0.78rem; font-family: inherit; resize: none; outline: none;
     }
     .score-panel input:focus,
     .score-panel textarea:focus { border-color: var(--accent2); }
     .btn-submit {
-      padding: 8px;
-      border-radius: 6px;
-      border: none;
-      background: var(--accent2);
-      color: #000;
-      font-size: 0.8rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.15s;
+      padding: 8px; border-radius: 6px; border: none;
+      background: var(--accent2); color: #000; font-size: 0.8rem; font-weight: 700;
+      cursor: pointer; transition: opacity 0.15s;
     }
     .btn-submit:hover    { opacity: 0.85; }
     .btn-submit:disabled { opacity: 0.35; cursor: not-allowed; }
-    .card-done-msg {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--accent);
-      padding: 6px 0;
-    }
+    .card-done-msg { text-align: center; font-size: 0.8rem; color: var(--accent); padding: 6px 0; }
 
-    /* ── BANK VIEW ───────────────────────────────────────────────────── */
-    #view-bank { padding: 32px 28px; max-width: 900px; width: 100%; margin: 0 auto; gap: 24px; }
+    /* ── BANK VIEW ────────────────────────────────────────────────── */
+    #view-bank { padding: 28px 24px; max-width: 920px; width: 100%; margin: 0 auto; gap: 22px; }
 
-    /* Add problem box */
     .add-box {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px 22px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px;
     }
-    .add-box h2 { font-size: 0.95rem; font-weight: 700; margin-bottom: 14px; }
-    .add-row { display: flex; gap: 10px; }
+    .add-box h2 { font-size: 0.92rem; font-weight: 700; margin-bottom: 12px; }
+    .add-row    { display: flex; gap: 10px; }
     .add-input {
-      flex: 1;
-      padding: 9px 12px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      font-size: 0.9rem;
-      outline: none;
-      font-family: inherit;
+      flex: 1; padding: 9px 12px; background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 6px; color: var(--text);
+      font-size: 0.9rem; outline: none; font-family: inherit;
     }
     .add-input:focus { border-color: var(--accent2); }
     .btn-add {
-      padding: 9px 20px;
-      border-radius: 6px;
-      border: none;
-      background: var(--accent);
-      color: #000;
-      font-size: 0.85rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.15s;
-      white-space: nowrap;
+      padding: 9px 20px; border-radius: 6px; border: none;
+      background: var(--accent); color: #000; font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; transition: opacity 0.15s; white-space: nowrap;
     }
     .btn-add:hover    { opacity: 0.88; }
     .btn-add:disabled { opacity: 0.4; cursor: not-allowed; }
-
-    /* preview row shown after lookup */
     .add-preview {
-      margin-top: 12px;
-      padding: 10px 12px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 7px;
-      font-size: 0.83rem;
-      display: none;
-      align-items: center;
-      gap: 10px;
+      margin-top: 10px; padding: 9px 12px; background: var(--surface2);
+      border: 1px solid var(--border); border-radius: 7px; font-size: 0.83rem;
+      display: none; align-items: center; gap: 10px;
     }
     .add-preview.visible { display: flex; }
-    .add-preview-title { flex: 1; font-weight: 600; }
-    .add-preview-msg { font-size: 0.78rem; color: var(--hard); margin-top: 8px; display: none; }
-    .add-preview-msg.visible { display: block; }
+    .add-preview-title   { flex: 1; font-weight: 600; }
+    .add-status { font-size: 0.78rem; margin-top: 7px; display: none; }
+    .add-status.visible { display: block; }
 
-    /* Bank table */
-    .bank-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .bank-header h2 { font-size: 0.95rem; font-weight: 700; }
-    .bank-count     { font-size: 0.8rem; color: var(--muted); }
-
+    .bank-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .bank-header h2 { font-size: 0.92rem; font-weight: 700; }
+    .bank-count { font-size: 0.8rem; color: var(--muted); }
     .bank-filter {
-      padding: 7px 11px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      font-size: 0.82rem;
-      outline: none;
-      font-family: inherit;
-      width: 200px;
+      padding: 7px 11px; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 6px; color: var(--text); font-size: 0.82rem; outline: none;
+      font-family: inherit; width: 200px;
     }
     .bank-filter:focus { border-color: var(--accent2); }
 
     .bank-table-wrap { overflow-x: auto; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.83rem;
-    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
     thead th {
-      text-align: left;
-      padding: 8px 10px;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--muted);
-      border-bottom: 1px solid var(--border);
-      white-space: nowrap;
-      cursor: pointer;
-      user-select: none;
+      text-align: left; padding: 8px 10px; font-size: 0.68rem;
+      text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
+      border-bottom: 1px solid var(--border); white-space: nowrap;
+      cursor: pointer; user-select: none;
     }
     thead th:hover { color: var(--text); }
     thead th.sorted { color: var(--accent2); }
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background 0.1s;
-    }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
     tbody tr:hover { background: var(--surface2); }
     tbody td { padding: 9px 10px; vertical-align: top; }
-    .td-id    { color: var(--muted); white-space: nowrap; font-size: 0.78rem; }
+    .td-id  { color: var(--muted); white-space: nowrap; font-size: 0.78rem; }
     .td-title a { color: var(--text); text-decoration: none; font-weight: 500; }
     .td-title a:hover { color: var(--accent2); }
-    .td-insight { color: var(--muted); font-size: 0.74rem; font-style: italic; margin-top: 3px; }
+    .td-cn-link { font-size: 0.72rem; color: #e87a5d; text-decoration: none; margin-left: 6px; }
+    .td-cn-link:hover { text-decoration: underline; }
+    .td-insight { color: var(--muted); font-size: 0.73rem; font-style: italic; margin-top: 3px; }
     .td-due { white-space: nowrap; font-size: 0.78rem; }
-    .due-overdue  { color: var(--hard); }
+    .due-overdue  { color: var(--hard); font-weight: 600; }
     .due-today    { color: var(--medium); font-weight: 600; }
     .due-upcoming { color: var(--muted); }
     .due-never    { color: #444; }
-    .td-actions { white-space: nowrap; }
+    .td-actions   { white-space: nowrap; }
     .btn-row-done {
-      padding: 4px 10px;
-      border-radius: 5px;
-      border: none;
-      background: var(--accent);
-      color: #000;
-      font-size: 0.72rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: opacity 0.12s;
+      padding: 4px 10px; border-radius: 5px; border: none;
+      background: var(--accent); color: #000; font-size: 0.72rem; font-weight: 700;
+      cursor: pointer; transition: opacity 0.12s;
     }
     .btn-row-done:hover { opacity: 0.8; }
 
-    /* inline score panel inside table row */
     .row-score-panel {
-      background: var(--surface2);
-      border-top: 1px solid var(--border);
-      padding: 10px;
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-      align-items: center;
+      background: var(--surface2); border-top: 1px solid var(--border);
+      padding: 10px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
     }
     .row-score-panel .score-btns { display: flex; gap: 4px; }
-    .row-score-panel .score-btn {
-      padding: 4px 8px;
-      font-size: 0.7rem;
-    }
-    .row-score-panel .btn-submit {
-      padding: 5px 12px;
-      font-size: 0.75rem;
-    }
+    .row-score-panel .score-btn  { padding: 4px 7px; font-size: 0.7rem; }
+    .row-score-panel .btn-submit { padding: 5px 12px; font-size: 0.74rem; }
 
-    .empty-bank {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.87rem;
-      padding: 40px 0;
-    }
-    .empty-bank p { margin-bottom: 8px; }
+    .empty-bank { text-align: center; color: var(--muted); font-size: 0.87rem; padding: 40px 0; }
+    .empty-bank p { margin-bottom: 6px; }
   </style>
 </head>
 <body>
@@ -447,73 +287,216 @@
 <!-- ── Nav ───────────────────────────────────────────────────────────── -->
 <nav>
   <span class="logo">⟳ leetrevive</span>
-  <button class="nav-tab active" data-view="today">📅 Today</button>
-  <button class="nav-tab"        data-view="bank">📚 My Bank</button>
-  <div class="nav-stats" id="nav-stats"></div>
+  <button class="nav-tab active" data-view="today" id="tab-today">📅 <span data-i18n="nav.today">Today</span></button>
+  <button class="nav-tab"        data-view="bank"  id="tab-bank">📚 <span data-i18n="nav.bank">My Bank</span></button>
+  <div class="nav-right">
+    <div class="nav-stats" id="nav-stats"></div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="lang-en">EN</button>
+      <button class="lang-btn"        id="lang-cn">中文</button>
+    </div>
+  </div>
 </nav>
 
 <!-- ── Today view ────────────────────────────────────────────────────── -->
 <div class="view active" id="view-today">
   <div class="today-hero">
-    <h1>What should I review today?</h1>
-    <p>Problems are picked by due date, weak spots, and recent activity.</p>
+    <h1 data-i18n="today.title">What should I review today?</h1>
+    <p  data-i18n="today.sub">Problems are picked by due date, weak spots, and recent activity.</p>
   </div>
-
-  <button class="btn-generate" id="btn-generate">⚡ Generate Today's Problems</button>
-
+  <button class="btn-generate" id="btn-generate">
+    ⚡ <span data-i18n="today.btn">Generate Today's Problems</span>
+  </button>
   <div class="cards-grid" id="cards-grid"></div>
 </div>
 
 <!-- ── Bank view ─────────────────────────────────────────────────────── -->
 <div class="view" id="view-bank">
 
-  <!-- Add problem -->
   <div class="add-box">
-    <h2>➕ Add a Problem</h2>
+    <h2>➕ <span data-i18n="add.title">Add a Problem</span></h2>
     <div class="add-row">
-      <input class="add-input" id="add-input" type="text"
-             placeholder="Problem ID (e.g. 146)  or  Title keywords"
-             autocomplete="off" />
-      <button class="btn-add" id="btn-add">Add</button>
+      <input class="add-input" id="add-input" type="text" autocomplete="off"
+             data-i18n-ph="add.placeholder" placeholder="Problem ID (e.g. 146)" />
+      <button class="btn-add" id="btn-add" data-i18n="add.btn">Add</button>
     </div>
     <div class="add-preview" id="add-preview">
       <span class="add-preview-title" id="add-preview-title"></span>
       <span id="add-preview-diff"></span>
     </div>
-    <div class="add-preview-msg" id="add-preview-msg"></div>
+    <div class="add-status" id="add-status"></div>
   </div>
 
-  <!-- Problem bank -->
   <div>
     <div class="bank-header" style="margin-bottom:12px">
-      <h2>My Bank <span class="bank-count" id="bank-count"></span></h2>
-      <input class="bank-filter" id="bank-filter" type="text" placeholder="Filter…" />
+      <h2><span data-i18n="bank.title">My Bank</span> <span class="bank-count" id="bank-count"></span></h2>
+      <input class="bank-filter" id="bank-filter" type="text" data-i18n-ph="bank.filter" placeholder="Filter…" />
     </div>
     <div class="bank-table-wrap">
       <table id="bank-table">
         <thead>
           <tr>
-            <th data-col="problem_id">#</th>
-            <th data-col="title">Title</th>
-            <th data-col="difficulty">Diff</th>
-            <th data-col="next_due_at">Next Due</th>
-            <th data-col="review_count">Reviews</th>
+            <th data-col="problem_id"  data-i18n="tbl.id">#</th>
+            <th data-col="title"       data-i18n="tbl.title">Title</th>
+            <th data-col="difficulty"  data-i18n="tbl.diff">Diff</th>
+            <th data-col="next_due_at" data-i18n="tbl.due">Next Due</th>
+            <th data-col="review_count" data-i18n="tbl.reviews">Reviews</th>
             <th></th>
           </tr>
         </thead>
         <tbody id="bank-tbody"></tbody>
       </table>
       <div class="empty-bank" id="bank-empty" style="display:none">
-        <p>No problems yet.</p>
-        <p>Add some above — just type a problem number like <b>1</b>, <b>146</b>, or <b>200</b>.</p>
+        <p data-i18n="bank.empty1">No problems yet.</p>
+        <p data-i18n="bank.empty2">Type a problem number above, e.g. <b>1</b>, <b>146</b>, or <b>200</b>.</p>
       </div>
     </div>
   </div>
 </div>
 
 <script>
+// ── i18n ──────────────────────────────────────────────────────────────────
+const STRINGS = {
+  en: {
+    'nav.today':      'Today',
+    'nav.bank':       'My Bank',
+    'today.title':    "What should I review today?",
+    'today.sub':      'Problems are picked by due date, weak spots, and recent activity.',
+    'today.btn':      "Generate Today's Problems",
+    'today.loading':  'Loading…',
+    'today.done':     "⚡ Generate Today's Problems",
+    'today.empty':    "🎉 Nothing due today — you're all caught up!",
+    'today.err':      'Error loading picks.',
+    'add.title':      'Add a Problem',
+    'add.placeholder':'Problem ID (e.g. 146)',
+    'add.btn':        'Add',
+    'add.adding':     '…',
+    'add.inbank':     'Already in your bank.',
+    'add.err':        'Error adding problem.',
+    'bank.title':     'My Bank',
+    'bank.filter':    'Filter…',
+    'bank.empty1':    'No problems yet.',
+    'bank.empty2':    'Type a problem number above, e.g. 1, 146, or 200.',
+    'tbl.id':         '#',
+    'tbl.title':      'Title',
+    'tbl.diff':       'Diff',
+    'tbl.due':        'Next Due',
+    'tbl.reviews':    'Reviews',
+    'score.how':      'How did it go?',
+    'score.0':        '0\nBlank',
+    'score.1':        '1\nPartial',
+    'score.2':        '2\nOK',
+    'score.3':        '3\nClean',
+    'score.min':      'Minutes spent (optional)',
+    'score.note':     'Note (optional)',
+    'score.mistake':  'Mistake to remember (optional)',
+    'score.submit':   'Submit',
+    'score.done':     '✓ Recorded — next due',
+    'score.review':   'review #',
+    'done.btn':       'Mark Done',
+    'row.done':       'Done',
+    'due.overdue':    'overdue',
+    'due.today':      'today',
+    'due.never':      '—',
+    'insight.label':  '💡 Key insight',
+    'lc.open':        'LeetCode ↗',
+    'lc.cn':          '力扣 ↗',
+    'stats.problems': 'problems',
+    'stats.reviews':  'reviews',
+    'stats.overdue':  'overdue',
+  },
+  cn: {
+    'nav.today':      '今日复习',
+    'nav.bank':       '我的题库',
+    'today.title':    '今天该复习哪些题？',
+    'today.sub':      '根据到期时间、薄弱点和最近活动自动选题。',
+    'today.btn':      '⚡ 生成今日题目',
+    'today.loading':  '加载中…',
+    'today.done':     '⚡ 生成今日题目',
+    'today.empty':    '🎉 今日无到期题目 — 全部完成！',
+    'today.err':      '加载失败，请确认服务正在运行。',
+    'add.title':      '添加题目',
+    'add.placeholder':'题目编号（如 146）',
+    'add.btn':        '添加',
+    'add.adding':     '…',
+    'add.inbank':     '该题已在题库中。',
+    'add.err':        '添加失败，请重试。',
+    'bank.title':     '我的题库',
+    'bank.filter':    '筛选…',
+    'bank.empty1':    '暂无题目。',
+    'bank.empty2':    '在上方输入题号即可添加，例如 1、146、200。',
+    'tbl.id':         '编号',
+    'tbl.title':      '题目',
+    'tbl.diff':       '难度',
+    'tbl.due':        '下次复习',
+    'tbl.reviews':    '复习次数',
+    'score.how':      '这次表现如何？',
+    'score.0':        '0\n完全忘了',
+    'score.1':        '1\n部分记住',
+    'score.2':        '2\n基本会',
+    'score.3':        '3\n非常熟练',
+    'score.min':      '用时（分钟，可选）',
+    'score.note':     '笔记（可选）',
+    'score.mistake':  '易错点（可选）',
+    'score.submit':   '提交',
+    'score.done':     '✓ 已记录 — 下次复习',
+    'score.review':   '第 # 次复习',
+    'done.btn':       '完成',
+    'row.done':       '完成',
+    'due.overdue':    '已逾期',
+    'due.today':      '今天',
+    'due.never':      '—',
+    'insight.label':  '💡 核心思路',
+    'lc.open':        'LeetCode ↗',
+    'lc.cn':          '力扣 ↗',
+    'stats.problems': '道题',
+    'stats.reviews':  '次复习',
+    'stats.overdue':  '已逾期',
+    'diff.easy':      '简单',
+    'diff.medium':    '中等',
+    'diff.hard':      '困难',
+  },
+};
+
+let lang = localStorage.getItem('lr_lang') || 'en';
+
+function t(key) {
+  return (STRINGS[lang] && STRINGS[lang][key]) || STRINGS.en[key] || key;
+}
+
+function applyI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    // For buttons that contain a span, only update the span
+    el.textContent = t(key);
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    el.placeholder = t(el.dataset.i18nPh);
+  });
+  // Update lang buttons
+  $('lang-en').classList.toggle('active', lang === 'en');
+  $('lang-cn').classList.toggle('active', lang === 'cn');
+  // Re-render if bank is visible
+  if ($('view-bank').classList.contains('active')) renderBank();
+}
+
+$('lang-en').addEventListener('click', () => { lang = 'en'; localStorage.setItem('lr_lang', lang); applyI18n(); });
+$('lang-cn').addEventListener('click', () => { lang = 'cn'; localStorage.setItem('lr_lang', lang); applyI18n(); });
+
+applyI18n();
+
+// ── Helpers ───────────────────────────────────────────────────────────────
 const $ = id => document.getElementById(id);
-const DIFF_BADGE = d => d ? `<span class="badge badge-${d}">${d}</span>` : '';
+
+function diffBadge(d) {
+  if (!d) return '';
+  const label = lang === 'cn' ? (t('diff.' + d) || d) : d;
+  return `<span class="badge badge-${d}">${label}</span>`;
+}
+
+function cnUrl(url) {
+  return url ? url.replace('leetcode.com', 'leetcode.cn') : '#';
+}
 
 // ── Nav tabs ──────────────────────────────────────────────────────────────
 document.querySelectorAll('.nav-tab').forEach(btn => {
@@ -526,15 +509,23 @@ document.querySelectorAll('.nav-tab').forEach(btn => {
   });
 });
 
-// ── Nav stats ─────────────────────────────────────────────────────────────
+// ── Stats ─────────────────────────────────────────────────────────────────
 async function loadStats() {
   try {
     const s = await fetch('/api/stats').then(r => r.json());
-    $('nav-stats').innerHTML = `
-      <span><b>${s.total_problems}</b> problems</span>
-      <span><b>${s.total_reviews}</b> reviews</span>
-      <span class="${s.overdue > 0 ? 'overdue' : ''}"><b>${s.overdue}</b> overdue</span>
-    `;
+    if (lang === 'cn') {
+      $('nav-stats').innerHTML = `
+        <span><b>${s.total_problems}</b> ${t('stats.problems')}</span>
+        <span><b>${s.total_reviews}</b> ${t('stats.reviews')}</span>
+        <span class="${s.overdue > 0 ? 'overdue' : ''}"><b>${s.overdue}</b> ${t('stats.overdue')}</span>
+      `;
+    } else {
+      $('nav-stats').innerHTML = `
+        <span><b>${s.total_problems}</b> problems</span>
+        <span><b>${s.total_reviews}</b> reviews</span>
+        <span class="${s.overdue > 0 ? 'overdue' : ''}"><b>${s.overdue}</b> overdue</span>
+      `;
+    }
   } catch(e) {}
 }
 loadStats();
@@ -543,47 +534,52 @@ loadStats();
 const btnGen  = $('btn-generate');
 const cardsEl = $('cards-grid');
 
-btnGen.addEventListener('click', async () => {
+btnGen.addEventListener('click', generateToday);
+
+async function generateToday() {
   btnGen.disabled = true;
-  btnGen.textContent = 'Loading…';
+  btnGen.querySelector('[data-i18n]').textContent = t('today.loading');
   cardsEl.innerHTML = '';
   try {
     const data = await fetch('/api/today').then(r => r.json());
     if (!data.picks.length) {
-      cardsEl.innerHTML = `<p style="color:var(--muted);font-size:.9rem">🎉 Nothing due today — you're all caught up!</p>`;
+      cardsEl.innerHTML = `<p style="color:var(--muted);font-size:.9rem">${t('today.empty')}</p>`;
     } else {
       data.picks.forEach((p, i) => cardsEl.appendChild(buildCard(p, i + 1)));
     }
   } catch(e) {
-    cardsEl.innerHTML = `<p style="color:var(--hard)">Error loading picks.</p>`;
+    cardsEl.innerHTML = `<p style="color:var(--hard)">${t('today.err')}</p>`;
   } finally {
     btnGen.disabled = false;
-    btnGen.textContent = '⚡ Generate Today\'s Problems';
+    btnGen.querySelector('[data-i18n]').textContent = t('today.done');
   }
-});
+}
 
 function buildCard(p, n) {
   const card = document.createElement('div');
   card.className = 'card';
   card.style.animationDelay = `${(n - 1) * 0.07}s`;
-  const tagPills = (p.tags || []).slice(0, 5).map(t => `<span class="tag-pill">${t}</span>`).join('');
+  const tagPills = (p.tags || []).slice(0, 5).map(t_ => `<span class="tag-pill">${t_}</span>`).join('');
+  const cn = cnUrl(p.url);
+
   card.innerHTML = `
     <div class="card-header">
       <div class="card-num">#${p.problem_id}</div>
       <div class="card-meta">
         <div class="card-title">${p.title}</div>
         <div class="card-pid">
-          ${DIFF_BADGE(p.difficulty)}
+          ${diffBadge(p.difficulty)}
           ${p.pattern ? `<span class="badge" style="background:#1e3a5f;color:var(--accent2)">${p.pattern}</span>` : ''}
         </div>
       </div>
     </div>
     ${tagPills ? `<div class="card-tags">${tagPills}</div>` : ''}
-    ${p.insight ? `<div class="card-insight"><span class="card-insight-label">💡 Key insight</span>${p.insight}</div>` : ''}
+    ${p.insight ? `<div class="card-insight"><span class="card-insight-label">${t('insight.label')}</span>${p.insight}</div>` : ''}
     <div><span class="badge badge-reason">${p.reason}</span></div>
     <div class="card-actions">
-      <a class="btn-open" href="${p.url || '#'}" target="_blank" rel="noopener">Open LeetCode ↗</a>
-      <button class="btn-done">Mark Done</button>
+      <a class="btn-lc"    href="${p.url || '#'}" target="_blank" rel="noopener">${t('lc.open')}</a>
+      <a class="btn-lc cn" href="${cn}"           target="_blank" rel="noopener">${t('lc.cn')}</a>
+      <button class="btn-done">${t('done.btn')}</button>
     </div>
   `;
   card.querySelector('.btn-done').addEventListener('click', function() {
@@ -596,18 +592,22 @@ function buildCard(p, n) {
 function buildScorePanel(pid, onDone) {
   const panel = document.createElement('div');
   panel.className = 'score-panel';
+  const [s0a, s0b] = t('score.0').split('\n');
+  const [s1a, s1b] = t('score.1').split('\n');
+  const [s2a, s2b] = t('score.2').split('\n');
+  const [s3a, s3b] = t('score.3').split('\n');
   panel.innerHTML = `
-    <label>How did it go?</label>
+    <label>${t('score.how')}</label>
     <div class="score-btns">
-      <button class="score-btn" data-score="0">0<br><small>Blank</small></button>
-      <button class="score-btn" data-score="1">1<br><small>Partial</small></button>
-      <button class="score-btn" data-score="2">2<br><small>OK</small></button>
-      <button class="score-btn" data-score="3">3<br><small>Clean</small></button>
+      <button class="score-btn" data-score="0">${s0a}<br><small>${s0b}</small></button>
+      <button class="score-btn" data-score="1">${s1a}<br><small>${s1b}</small></button>
+      <button class="score-btn" data-score="2">${s2a}<br><small>${s2b}</small></button>
+      <button class="score-btn" data-score="3">${s3a}<br><small>${s3b}</small></button>
     </div>
-    <input type="number" class="inp-minutes" placeholder="Minutes spent (optional)" min="1" max="999" />
-    <textarea class="inp-note"    rows="2" placeholder="Note (optional)"></textarea>
-    <textarea class="inp-mistake" rows="2" placeholder="Mistake to remember (optional)"></textarea>
-    <button class="btn-submit" disabled>Submit</button>
+    <input type="number" class="inp-minutes" placeholder="${t('score.min')}" min="1" max="999" />
+    <textarea class="inp-note"    rows="2" placeholder="${t('score.note')}"></textarea>
+    <textarea class="inp-mistake" rows="2" placeholder="${t('score.mistake')}"></textarea>
+    <button class="btn-submit" disabled>${t('score.submit')}</button>
   `;
   let selectedScore = null;
   panel.querySelectorAll('.score-btn').forEach(btn => {
@@ -632,12 +632,15 @@ function buildScorePanel(pid, onDone) {
           mistake:    panel.querySelector('.inp-mistake').value.trim() || null,
         }),
       }).then(r => r.json());
-      panel.innerHTML = `<div class="card-done-msg">✓ Recorded — next due <b>${res.next_due_at}</b> · review #${res.review_count}</div>`;
+      const reviewLabel = lang === 'cn'
+        ? `第 ${res.review_count} 次复习`
+        : `review #${res.review_count}`;
+      panel.innerHTML = `<div class="card-done-msg">${t('score.done')} <b>${res.next_due_at}</b> · ${reviewLabel}</div>`;
       loadStats();
       if (onDone) onDone();
     } catch(e) {
       panel.querySelector('.btn-submit').disabled = false;
-      alert('Error saving review.');
+      alert(t('add.err'));
     }
   });
   return panel;
@@ -663,17 +666,14 @@ function renderBank() {
     p.problem_id.includes(filter) ||
     p.title.toLowerCase().includes(filter) ||
     (p.difficulty || '').toLowerCase().includes(filter) ||
-    (p.tags || []).some(t => t.includes(filter))
+    (p.tags || []).some(tag => tag.includes(filter))
   );
 
-  // Sort
   rows.sort((a, b) => {
     let va = a[sortCol], vb = b[sortCol];
-    if (va === null || va === undefined) va = sortAsc ? 'zzz' : '';
-    if (vb === null || vb === undefined) vb = sortAsc ? 'zzz' : '';
-    if (sortCol === 'review_count' || sortCol === 'avg_score') {
-      va = parseFloat(va) || 0; vb = parseFloat(vb) || 0;
-    }
+    if (va == null) va = sortAsc ? 'zzz' : '';
+    if (vb == null) vb = sortAsc ? 'zzz' : '';
+    if (sortCol === 'review_count' || sortCol === 'avg_score') { va = +va || 0; vb = +vb || 0; }
     return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
   });
 
@@ -681,43 +681,40 @@ function renderBank() {
   const tbody = $('bank-tbody');
   tbody.innerHTML = '';
   $('bank-empty').style.display = rows.length === 0 ? 'block' : 'none';
+  $('bank-empty').querySelector('[data-i18n]')?.setAttribute('data-i18n', 'bank.empty1');
 
   const today = new Date().toISOString().slice(0, 10);
 
   rows.forEach(p => {
     const tr = document.createElement('tr');
-
-    // due date display
-    let dueCell = '<span class="due-never">—</span>';
+    let dueCell = `<span class="due-never">${t('due.never')}</span>`;
     if (p.next_due_at) {
-      if (p.next_due_at < today)
-        dueCell = `<span class="due-overdue">overdue</span>`;
-      else if (p.next_due_at === today)
-        dueCell = `<span class="due-today">today</span>`;
-      else
-        dueCell = `<span class="due-upcoming">${p.next_due_at}</span>`;
+      if      (p.next_due_at < today)  dueCell = `<span class="due-overdue">${t('due.overdue')}</span>`;
+      else if (p.next_due_at === today) dueCell = `<span class="due-today">${t('due.today')}</span>`;
+      else                              dueCell = `<span class="due-upcoming">${p.next_due_at}</span>`;
     }
+    const cn = cnUrl(p.url);
+    const reviewInfo = p.review_count
+      ? `${p.review_count}${p.avg_score != null ? ` · avg ${p.avg_score}` : ''}`
+      : '0';
 
     tr.innerHTML = `
       <td class="td-id">#${p.problem_id}</td>
       <td class="td-title">
         <a href="${p.url || '#'}" target="_blank" rel="noopener">${p.title}</a>
+        <a class="td-cn-link" href="${cn}" target="_blank" rel="noopener">力扣</a>
         ${p.insight ? `<div class="td-insight">${p.insight}</div>` : ''}
       </td>
-      <td>${DIFF_BADGE(p.difficulty)}</td>
+      <td>${diffBadge(p.difficulty)}</td>
       <td class="td-due">${dueCell}</td>
-      <td style="color:var(--muted);font-size:.78rem">${p.review_count || 0}${p.avg_score !== null && p.avg_score !== undefined ? ` · avg ${p.avg_score}` : ''}</td>
-      <td class="td-actions"><button class="btn-row-done">Done</button></td>
+      <td style="color:var(--muted);font-size:.78rem">${reviewInfo}</td>
+      <td class="td-actions"><button class="btn-row-done">${t('row.done')}</button></td>
     `;
 
-    // inline "Done" from bank row
     tr.querySelector('.btn-row-done').addEventListener('click', function() {
-      // If a panel already open on this row, remove it
       const existing = tr.nextSibling;
-      if (existing && existing.classList && existing.classList.contains('score-row')) {
-        existing.remove();
-        this.textContent = 'Done';
-        return;
+      if (existing && existing.classList?.contains('score-row')) {
+        existing.remove(); this.textContent = t('row.done'); return;
       }
       this.textContent = '✕';
       const panelRow = document.createElement('tr');
@@ -726,30 +723,28 @@ function renderBank() {
       td.colSpan = 6;
       const panel = buildScorePanel(p.problem_id, () => {
         panelRow.remove();
-        tr.querySelector('.btn-row-done').textContent = 'Done';
-        loadBank(); // refresh next_due
+        tr.querySelector('.btn-row-done').textContent = t('row.done');
+        loadBank();
       });
-      panel.className = 'row-score-panel';
+      panel.classList.add('row-score-panel');
       td.appendChild(panel);
       panelRow.appendChild(td);
       tr.after(panelRow);
     });
-
     tbody.appendChild(tr);
   });
 
-  // Update sort header highlights
   document.querySelectorAll('#bank-table thead th').forEach(th => {
     th.classList.toggle('sorted', th.dataset.col === sortCol);
   });
 }
 
 $('bank-filter').addEventListener('input', renderBank);
-
 document.querySelectorAll('#bank-table thead th[data-col]').forEach(th => {
   th.addEventListener('click', () => {
-    if (sortCol === th.dataset.col) sortAsc = !sortAsc;
-    else { sortCol = th.dataset.col; sortAsc = true; }
+    sortCol = th.dataset.col;
+    sortAsc = sortCol === th.dataset.col ? !sortAsc : true;
+    sortCol = th.dataset.col;
     renderBank();
   });
 });
@@ -758,47 +753,36 @@ document.querySelectorAll('#bank-table thead th[data-col]').forEach(th => {
 const addInput   = $('add-input');
 const btnAdd     = $('btn-add');
 const addPreview = $('add-preview');
-const addMsg     = $('add-preview-msg');
-let   previewPid = null;
-let   lookupTimer = null;
+const addStatus  = $('add-status');
+let lookupTimer  = null;
 
 addInput.addEventListener('input', () => {
   clearTimeout(lookupTimer);
   const val = addInput.value.trim();
-  if (!val || !/^\d+$/.test(val)) {
-    addPreview.classList.remove('visible');
-    addMsg.classList.remove('visible');
-    previewPid = null;
-    return;
-  }
+  addPreview.classList.remove('visible');
+  addStatus.classList.remove('visible');
+  if (!val || !/^\d+$/.test(val)) return;
   lookupTimer = setTimeout(() => lookupPreview(val), 350);
 });
-
-addInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') doAdd();
-});
+addInput.addEventListener('keydown', e => { if (e.key === 'Enter') doAdd(); });
 btnAdd.addEventListener('click', doAdd);
 
 async function lookupPreview(pid) {
   try {
     const meta = await fetch(`/api/search/${pid}`).then(r => r.json());
-    previewPid = pid;
     $('add-preview-title').textContent = `#${meta.problem_id} ${meta.title}`;
-    $('add-preview-diff').innerHTML = DIFF_BADGE(meta.difficulty);
+    $('add-preview-diff').innerHTML = diffBadge(meta.difficulty);
     addPreview.classList.add('visible');
     if (meta.in_bank) {
-      addMsg.textContent = 'Already in your bank.';
-      addMsg.style.color = 'var(--medium)';
-      addMsg.classList.add('visible');
+      addStatus.textContent = t('add.inbank');
+      addStatus.style.color = 'var(--medium)';
+      addStatus.classList.add('visible');
       btnAdd.disabled = true;
     } else {
-      addMsg.classList.remove('visible');
       btnAdd.disabled = false;
     }
   } catch(e) {
     addPreview.classList.remove('visible');
-    addMsg.classList.remove('visible');
-    previewPid = null;
   }
 }
 
@@ -806,28 +790,26 @@ async function doAdd() {
   const val = addInput.value.trim();
   if (!val) return;
   btnAdd.disabled = true;
-  btnAdd.textContent = '…';
+  btnAdd.textContent = t('add.adding');
+  addStatus.classList.remove('visible');
   try {
     const res = await fetch('/api/add', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ problem_id: val }),
     }).then(r => r.json());
-    addMsg.textContent = `✓ Added: #${res.problem_id} ${res.title}`;
-    addMsg.style.color = 'var(--accent)';
-    addMsg.classList.add('visible');
+    addStatus.textContent = `✓ ${res.problem_id}. ${res.title}`;
+    addStatus.style.color = 'var(--accent)';
+    addStatus.classList.add('visible');
     addInput.value = '';
     addPreview.classList.remove('visible');
-    previewPid = null;
     loadStats();
     loadBank();
   } catch(e) {
-    const err = await e.response?.json().catch(() => null);
-    addMsg.textContent = err?.detail || 'Error adding problem.';
-    addMsg.style.color = 'var(--hard)';
-    addMsg.classList.add('visible');
+    addStatus.textContent = t('add.err');
+    addStatus.style.color = 'var(--hard)';
+    addStatus.classList.add('visible');
   } finally {
-    btnAdd.textContent = 'Add';
+    btnAdd.textContent = t('add.btn');
     btnAdd.disabled = false;
   }
 }

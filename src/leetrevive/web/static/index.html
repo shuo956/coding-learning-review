@@ -29,64 +29,42 @@
       flex-direction: column;
     }
 
-    /* ── Nav ──────────────────────────────────────────────────────── */
+    /* ── Nav ─────────────────────────────────────────────────────── */
     nav {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 0 20px;
-      height: 52px;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      flex-shrink: 0;
+      display: flex; align-items: center; gap: 6px;
+      padding: 0 20px; height: 52px;
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100; flex-shrink: 0;
     }
     .logo { font-weight: 700; font-size: 1rem; color: var(--accent); letter-spacing: -0.5px; margin-right: 12px; }
     .nav-tab {
       padding: 5px 13px; border-radius: 6px; border: none;
-      background: transparent; color: var(--muted);
-      font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.15s;
+      background: transparent; color: var(--muted); font-size: 0.85rem;
+      font-weight: 500; cursor: pointer; transition: all 0.15s;
     }
     .nav-tab:hover  { color: var(--text); background: var(--surface2); }
     .nav-tab.active { color: var(--text); background: var(--surface2); }
-
     .nav-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
     .nav-stats { display: flex; gap: 16px; font-size: 0.78rem; color: var(--muted); }
     .nav-stats span b { color: var(--text); }
     .nav-stats .overdue b { color: var(--hard); }
-
-    /* Language toggle */
-    .lang-toggle {
-      display: flex;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden;
-    }
+    .lang-toggle { display: flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
     .lang-btn {
-      padding: 4px 10px;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
+      padding: 4px 10px; border: none; background: transparent;
+      color: var(--muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.15s;
     }
     .lang-btn.active { background: var(--surface2); color: var(--text); }
     .lang-btn:hover:not(.active) { color: var(--text); }
 
-    /* ── Views ────────────────────────────────────────────────────── */
+    /* ── Views ───────────────────────────────────────────────────── */
     .view { display: none; flex: 1; flex-direction: column; }
     .view.active { display: flex; }
 
-    /* ── TODAY VIEW ───────────────────────────────────────────────── */
+    /* ── TODAY VIEW ──────────────────────────────────────────────── */
     #view-today { align-items: center; padding: 40px 24px; gap: 28px; }
     .today-hero { text-align: center; }
     .today-hero h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 6px; }
     .today-hero p  { color: var(--muted); font-size: 0.87rem; }
-
     .btn-generate {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 12px 28px; background: var(--accent); color: #000;
@@ -96,10 +74,9 @@
     .btn-generate:hover    { opacity: 0.9; }
     .btn-generate:active   { transform: scale(0.98); }
     .btn-generate:disabled { opacity: 0.4; cursor: not-allowed; }
-
     .cards-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 1060px; }
 
-    /* ── Card ─────────────────────────────────────────────────────── */
+    /* ── Card ────────────────────────────────────────────────────── */
     .card {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 20px 22px;
@@ -113,13 +90,11 @@
     .card-header { display: flex; align-items: flex-start; gap: 12px; }
     .card-num {
       width: 34px; height: 34px; border-radius: 8px; background: var(--surface2);
-      display: grid; place-items: center; font-weight: 700;
-      font-size: 0.82rem; color: var(--muted); flex-shrink: 0;
+      display: grid; place-items: center; font-weight: 700; font-size: 0.82rem; color: var(--muted); flex-shrink: 0;
     }
     .card-meta { flex: 1; }
     .card-title { font-weight: 600; font-size: 0.92rem; line-height: 1.35; margin-bottom: 4px; }
     .card-pid   { font-size: 0.73rem; color: var(--muted); display: flex; gap: 5px; flex-wrap: wrap; }
-
     .badge {
       display: inline-block; padding: 2px 7px; border-radius: 4px;
       font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em;
@@ -128,7 +103,6 @@
     .badge-medium { background: #78350f55; color: var(--medium); }
     .badge-hard   { background: #7f1d1d55; color: var(--hard); }
     .badge-reason { background: #1e3a5f;   color: var(--accent2); }
-
     .card-tags { display: flex; flex-wrap: wrap; gap: 4px; }
     .tag-pill {
       padding: 2px 7px; border-radius: 20px; font-size: 0.68rem;
@@ -141,19 +115,16 @@
     }
     .card-insight-label {
       font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--accent2); display: block;
-      margin-bottom: 2px; font-style: normal;
+      text-transform: uppercase; color: var(--accent2); display: block; margin-bottom: 2px; font-style: normal;
     }
-
     .card-actions { display: flex; gap: 7px; margin-top: auto; flex-wrap: wrap; }
     .btn-lc {
       flex: 1; padding: 8px 6px; border-radius: 6px; border: 1px solid var(--border);
       background: transparent; color: var(--text); font-size: 0.78rem; font-weight: 500;
-      cursor: pointer; text-decoration: none; text-align: center; transition: background 0.15s;
-      white-space: nowrap;
+      cursor: pointer; text-decoration: none; text-align: center; transition: background 0.15s; white-space: nowrap;
     }
-    .btn-lc:hover { background: var(--surface2); }
-    .btn-lc.cn    { border-color: #e44d2655; color: #e87a5d; }
+    .btn-lc:hover    { background: var(--surface2); }
+    .btn-lc.cn       { border-color: #e44d2655; color: #e87a5d; }
     .btn-lc.cn:hover { background: #e44d2615; }
     .btn-done {
       flex: 1; padding: 8px; border-radius: 6px; border: none;
@@ -163,7 +134,7 @@
     .btn-done:hover    { opacity: 0.85; }
     .btn-done:disabled { opacity: 0.35; cursor: not-allowed; }
 
-    /* ── Score panel ──────────────────────────────────────────────── */
+    /* ── Score panel ─────────────────────────────────────────────── */
     .score-panel {
       border-top: 1px solid var(--border); padding-top: 12px;
       display: flex; flex-direction: column; gap: 8px;
@@ -196,9 +167,8 @@
     .btn-submit:disabled { opacity: 0.35; cursor: not-allowed; }
     .card-done-msg { text-align: center; font-size: 0.8rem; color: var(--accent); padding: 6px 0; }
 
-    /* ── BANK VIEW ────────────────────────────────────────────────── */
+    /* ── BANK VIEW ───────────────────────────────────────────────── */
     #view-bank { padding: 28px 24px; max-width: 920px; width: 100%; margin: 0 auto; gap: 22px; }
-
     .add-box {
       background: var(--surface); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 18px 20px;
@@ -227,7 +197,6 @@
     .add-preview-title   { flex: 1; font-weight: 600; }
     .add-status { font-size: 0.78rem; margin-top: 7px; display: none; }
     .add-status.visible { display: block; }
-
     .bank-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
     .bank-header h2 { font-size: 0.92rem; font-weight: 700; }
     .bank-count { font-size: 0.8rem; color: var(--muted); }
@@ -237,14 +206,12 @@
       font-family: inherit; width: 200px;
     }
     .bank-filter:focus { border-color: var(--accent2); }
-
     .bank-table-wrap { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
     thead th {
       text-align: left; padding: 8px 10px; font-size: 0.68rem;
       text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted);
-      border-bottom: 1px solid var(--border); white-space: nowrap;
-      cursor: pointer; user-select: none;
+      border-bottom: 1px solid var(--border); white-space: nowrap; cursor: pointer; user-select: none;
     }
     thead th:hover { color: var(--text); }
     thead th.sorted { color: var(--accent2); }
@@ -269,7 +236,6 @@
       cursor: pointer; transition: opacity 0.12s;
     }
     .btn-row-done:hover { opacity: 0.8; }
-
     .row-score-panel {
       background: var(--surface2); border-top: 1px solid var(--border);
       padding: 10px; display: flex; gap: 6px; flex-wrap: wrap; align-items: center;
@@ -277,9 +243,69 @@
     .row-score-panel .score-btns { display: flex; gap: 4px; }
     .row-score-panel .score-btn  { padding: 4px 7px; font-size: 0.7rem; }
     .row-score-panel .btn-submit { padding: 5px 12px; font-size: 0.74rem; }
-
     .empty-bank { text-align: center; color: var(--muted); font-size: 0.87rem; padding: 40px 0; }
     .empty-bank p { margin-bottom: 6px; }
+
+    /* ── MOCK VIEW ───────────────────────────────────────────────── */
+    #view-mock { align-items: center; padding: 40px 24px; gap: 28px; }
+
+    .mock-config {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px 32px; width: 100%; max-width: 500px;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    .mock-config h2 { font-size: 1.1rem; font-weight: 700; }
+    .mock-config p  { font-size: 0.83rem; color: var(--muted); margin-top: -12px; }
+    .config-row { display: flex; flex-direction: column; gap: 8px; }
+    .config-row label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .chip-group { display: flex; gap: 8px; flex-wrap: wrap; }
+    .chip {
+      padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border);
+      background: var(--surface2); color: var(--muted); font-size: 0.82rem;
+      font-weight: 500; cursor: pointer; transition: all 0.12s;
+    }
+    .chip:hover       { color: var(--text); border-color: var(--accent2); }
+    .chip.selected    { background: #1e3a5f; color: var(--accent2); border-color: var(--accent2); }
+    .btn-start-mock {
+      padding: 12px; border-radius: 8px; border: none;
+      background: var(--accent); color: #000; font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; transition: opacity 0.15s;
+    }
+    .btn-start-mock:hover { opacity: 0.88; }
+
+    /* Mock session header */
+    .mock-session-header {
+      width: 100%; max-width: 1060px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .mock-timer {
+      font-size: 1.6rem; font-weight: 700; font-variant-numeric: tabular-nums;
+      color: var(--accent2); letter-spacing: 0.04em;
+    }
+    .mock-timer.warn  { color: var(--medium); }
+    .mock-timer.alert { color: var(--hard); animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+    .btn-end-mock {
+      padding: 8px 20px; border-radius: 6px; border: 1px solid var(--border);
+      background: transparent; color: var(--muted); font-size: 0.82rem;
+      font-weight: 600; cursor: pointer; transition: all 0.15s;
+    }
+    .btn-end-mock:hover { color: var(--hard); border-color: var(--hard); }
+
+    /* Mock summary */
+    .mock-summary {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 24px 28px; width: 100%; max-width: 500px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .mock-summary h2 { font-size: 1rem; font-weight: 700; }
+    .summary-row { display: flex; justify-content: space-between; font-size: 0.85rem; }
+    .summary-row span:last-child { font-weight: 700; color: var(--accent); }
+    .btn-mock-again {
+      padding: 10px; border-radius: 6px; border: none;
+      background: var(--accent2); color: #000; font-size: 0.85rem; font-weight: 700;
+      cursor: pointer; transition: opacity 0.15s; margin-top: 6px;
+    }
+    .btn-mock-again:hover { opacity: 0.85; }
   </style>
 </head>
 <body>
@@ -287,8 +313,9 @@
 <!-- ── Nav ───────────────────────────────────────────────────────────── -->
 <nav>
   <span class="logo">⟳ leetrevive</span>
-  <button class="nav-tab active" data-view="today" id="tab-today">📅 <span data-i18n="nav.today">Today</span></button>
-  <button class="nav-tab"        data-view="bank"  id="tab-bank">📚 <span data-i18n="nav.bank">My Bank</span></button>
+  <button class="nav-tab active" data-view="today">📅 <span data-i18n="nav.today">Today</span></button>
+  <button class="nav-tab"        data-view="bank" >📚 <span data-i18n="nav.bank">My Bank</span></button>
+  <button class="nav-tab"        data-view="mock" >🎯 <span data-i18n="nav.mock">Mock</span></button>
   <div class="nav-right">
     <div class="nav-stats" id="nav-stats"></div>
     <div class="lang-toggle">
@@ -312,7 +339,6 @@
 
 <!-- ── Bank view ─────────────────────────────────────────────────────── -->
 <div class="view" id="view-bank">
-
   <div class="add-box">
     <h2>➕ <span data-i18n="add.title">Add a Problem</span></h2>
     <div class="add-row">
@@ -326,7 +352,6 @@
     </div>
     <div class="add-status" id="add-status"></div>
   </div>
-
   <div>
     <div class="bank-header" style="margin-bottom:12px">
       <h2><span data-i18n="bank.title">My Bank</span> <span class="bank-count" id="bank-count"></span></h2>
@@ -336,10 +361,10 @@
       <table id="bank-table">
         <thead>
           <tr>
-            <th data-col="problem_id"  data-i18n="tbl.id">#</th>
-            <th data-col="title"       data-i18n="tbl.title">Title</th>
-            <th data-col="difficulty"  data-i18n="tbl.diff">Diff</th>
-            <th data-col="next_due_at" data-i18n="tbl.due">Next Due</th>
+            <th data-col="problem_id"   data-i18n="tbl.id">#</th>
+            <th data-col="title"        data-i18n="tbl.title">Title</th>
+            <th data-col="difficulty"   data-i18n="tbl.diff">Diff</th>
+            <th data-col="next_due_at"  data-i18n="tbl.due">Next Due</th>
             <th data-col="review_count" data-i18n="tbl.reviews">Reviews</th>
             <th></th>
           </tr>
@@ -348,141 +373,224 @@
       </table>
       <div class="empty-bank" id="bank-empty" style="display:none">
         <p data-i18n="bank.empty1">No problems yet.</p>
-        <p data-i18n="bank.empty2">Type a problem number above, e.g. <b>1</b>, <b>146</b>, or <b>200</b>.</p>
+        <p data-i18n="bank.empty2">Type a problem number above, e.g. 1, 146, or 200.</p>
       </div>
     </div>
   </div>
+</div>
+
+<!-- ── Mock view ─────────────────────────────────────────────────────── -->
+<div class="view" id="view-mock">
+
+  <!-- Config screen -->
+  <div class="mock-config" id="mock-config">
+    <div>
+      <h2 data-i18n="mock.title">🎯 Mock Interview</h2>
+      <p  data-i18n="mock.sub">Randomly sample problems from your bank — no hints, just like the real thing.</p>
+    </div>
+    <div class="config-row">
+      <label data-i18n="mock.count">Number of problems</label>
+      <div class="chip-group" id="chip-count">
+        <button class="chip" data-val="1">1</button>
+        <button class="chip selected" data-val="2">2</button>
+        <button class="chip" data-val="3">3</button>
+        <button class="chip" data-val="4">4</button>
+      </div>
+    </div>
+    <div class="config-row">
+      <label data-i18n="mock.diff">Difficulty</label>
+      <div class="chip-group" id="chip-diff">
+        <button class="chip selected" data-val="all"    data-i18n="mock.diff.all">Any</button>
+        <button class="chip"          data-val="easy"   data-i18n="mock.diff.easy">Easy</button>
+        <button class="chip"          data-val="medium" data-i18n="mock.diff.medium">Medium</button>
+        <button class="chip"          data-val="hard"   data-i18n="mock.diff.hard">Hard</button>
+      </div>
+    </div>
+    <div class="config-row">
+      <label data-i18n="mock.time">Time limit</label>
+      <div class="chip-group" id="chip-time">
+        <button class="chip" data-val="1800" >30 min</button>
+        <button class="chip selected" data-val="2700">45 min</button>
+        <button class="chip" data-val="3600">60 min</button>
+        <button class="chip" data-val="0"   data-i18n="mock.time.none">No limit</button>
+      </div>
+    </div>
+    <button class="btn-start-mock" id="btn-start-mock" data-i18n="mock.start">Start Mock Interview</button>
+  </div>
+
+  <!-- Session screen (hidden until started) -->
+  <div id="mock-session" style="display:none; width:100%; max-width:1060px; display:none; flex-direction:column; align-items:center; gap:24px">
+    <div class="mock-session-header">
+      <div class="mock-timer" id="mock-timer">45:00</div>
+      <button class="btn-end-mock" id="btn-end-mock" data-i18n="mock.end">End &amp; Score</button>
+    </div>
+    <div class="cards-grid" id="mock-cards"></div>
+  </div>
+
+  <!-- Summary screen (hidden until scored) -->
+  <div class="mock-summary" id="mock-summary" style="display:none">
+    <h2 data-i18n="mock.summary">Session Summary</h2>
+    <div id="summary-body"></div>
+    <button class="btn-mock-again" id="btn-mock-again" data-i18n="mock.again">New Mock</button>
+  </div>
+
 </div>
 
 <script>
 // ── i18n ──────────────────────────────────────────────────────────────────
 const STRINGS = {
   en: {
-    'nav.today':      'Today',
-    'nav.bank':       'My Bank',
-    'today.title':    "What should I review today?",
-    'today.sub':      'Problems are picked by due date, weak spots, and recent activity.',
-    'today.btn':      "Generate Today's Problems",
-    'today.loading':  'Loading…',
-    'today.done':     "⚡ Generate Today's Problems",
-    'today.empty':    "🎉 Nothing due today — you're all caught up!",
-    'today.err':      'Error loading picks.',
-    'add.title':      'Add a Problem',
-    'add.placeholder':'Problem ID (e.g. 146)',
-    'add.btn':        'Add',
-    'add.adding':     '…',
-    'add.inbank':     'Already in your bank.',
-    'add.err':        'Error adding problem.',
-    'bank.title':     'My Bank',
-    'bank.filter':    'Filter…',
-    'bank.empty1':    'No problems yet.',
-    'bank.empty2':    'Type a problem number above, e.g. 1, 146, or 200.',
-    'tbl.id':         '#',
-    'tbl.title':      'Title',
-    'tbl.diff':       'Diff',
-    'tbl.due':        'Next Due',
-    'tbl.reviews':    'Reviews',
-    'score.how':      'How did it go?',
-    'score.0':        '0\nBlank',
-    'score.1':        '1\nPartial',
-    'score.2':        '2\nOK',
-    'score.3':        '3\nClean',
-    'score.min':      'Minutes spent (optional)',
-    'score.note':     'Note (optional)',
-    'score.mistake':  'Mistake to remember (optional)',
-    'score.submit':   'Submit',
-    'score.done':     '✓ Recorded — next due',
-    'score.review':   'review #',
-    'done.btn':       'Mark Done',
-    'row.done':       'Done',
-    'due.overdue':    'overdue',
-    'due.today':      'today',
-    'due.never':      '—',
-    'insight.label':  '💡 Key insight',
-    'lc.open':        'LeetCode ↗',
-    'lc.cn':          '力扣 ↗',
-    'stats.problems': 'problems',
-    'stats.reviews':  'reviews',
-    'stats.overdue':  'overdue',
+    'nav.today':       'Today',
+    'nav.bank':        'My Bank',
+    'nav.mock':        'Mock',
+    'today.title':     "What should I review today?",
+    'today.sub':       'Problems are picked by due date, weak spots, and recent activity.',
+    'today.btn':       "Generate Today's Problems",
+    'today.loading':   'Loading…',
+    'today.done':      "⚡ Generate Today's Problems",
+    'today.empty':     "🎉 Nothing due today — you're all caught up!",
+    'today.err':       'Error loading picks.',
+    'add.title':       'Add a Problem',
+    'add.placeholder': 'Problem ID (e.g. 146)',
+    'add.btn':         'Add',
+    'add.inbank':      'Already in your bank.',
+    'add.err':         'Error adding problem.',
+    'bank.title':      'My Bank',
+    'bank.filter':     'Filter…',
+    'bank.empty1':     'No problems yet.',
+    'bank.empty2':     'Type a problem number above, e.g. 1, 146, or 200.',
+    'tbl.id':          '#',
+    'tbl.title':       'Title',
+    'tbl.diff':        'Diff',
+    'tbl.due':         'Next Due',
+    'tbl.reviews':     'Reviews',
+    'score.how':       'How did it go?',
+    'score.0':         '0\nBlank',
+    'score.1':         '1\nPartial',
+    'score.2':         '2\nOK',
+    'score.3':         '3\nClean',
+    'score.min':       'Minutes spent (optional)',
+    'score.note':      'Note (optional)',
+    'score.mistake':   'Mistake to remember (optional)',
+    'score.submit':    'Submit',
+    'score.done':      '✓ Recorded — next due',
+    'score.review':    'review #',
+    'done.btn':        'Mark Done',
+    'row.done':        'Done',
+    'due.overdue':     'overdue',
+    'due.today':       'today',
+    'due.never':       '—',
+    'insight.label':   '💡 Key insight',
+    'lc.open':         'LeetCode ↗',
+    'lc.cn':           '力扣 ↗',
+    'stats.problems':  'problems',
+    'stats.reviews':   'reviews',
+    'stats.overdue':   'overdue',
+    'mock.title':      '🎯 Mock Interview',
+    'mock.sub':        'Randomly sample problems from your bank — no hints, just like the real thing.',
+    'mock.count':      'Number of problems',
+    'mock.diff':       'Difficulty',
+    'mock.diff.all':   'Any',
+    'mock.diff.easy':  'Easy',
+    'mock.diff.medium':'Medium',
+    'mock.diff.hard':  'Hard',
+    'mock.time':       'Time limit',
+    'mock.time.none':  'No limit',
+    'mock.start':      'Start Mock Interview',
+    'mock.end':        'End & Score',
+    'mock.summary':    'Session Summary',
+    'mock.again':      'New Mock',
+    'mock.time_up':    "⏰ Time's up! Submit your scores.",
+    'mock.solved':     'Problems solved',
+    'mock.avg':        'Average score',
+    'mock.elapsed':    'Time used',
+    'mock.no_bank':    'No problems in your bank yet. Add some in My Bank first.',
   },
   cn: {
-    'nav.today':      '今日复习',
-    'nav.bank':       '我的题库',
-    'today.title':    '今天该复习哪些题？',
-    'today.sub':      '根据到期时间、薄弱点和最近活动自动选题。',
-    'today.btn':      '⚡ 生成今日题目',
-    'today.loading':  '加载中…',
-    'today.done':     '⚡ 生成今日题目',
-    'today.empty':    '🎉 今日无到期题目 — 全部完成！',
-    'today.err':      '加载失败，请确认服务正在运行。',
-    'add.title':      '添加题目',
-    'add.placeholder':'题目编号（如 146）',
-    'add.btn':        '添加',
-    'add.adding':     '…',
-    'add.inbank':     '该题已在题库中。',
-    'add.err':        '添加失败，请重试。',
-    'bank.title':     '我的题库',
-    'bank.filter':    '筛选…',
-    'bank.empty1':    '暂无题目。',
-    'bank.empty2':    '在上方输入题号即可添加，例如 1、146、200。',
-    'tbl.id':         '编号',
-    'tbl.title':      '题目',
-    'tbl.diff':       '难度',
-    'tbl.due':        '下次复习',
-    'tbl.reviews':    '复习次数',
-    'score.how':      '这次表现如何？',
-    'score.0':        '0\n完全忘了',
-    'score.1':        '1\n部分记住',
-    'score.2':        '2\n基本会',
-    'score.3':        '3\n非常熟练',
-    'score.min':      '用时（分钟，可选）',
-    'score.note':     '笔记（可选）',
-    'score.mistake':  '易错点（可选）',
-    'score.submit':   '提交',
-    'score.done':     '✓ 已记录 — 下次复习',
-    'score.review':   '第 # 次复习',
-    'done.btn':       '完成',
-    'row.done':       '完成',
-    'due.overdue':    '已逾期',
-    'due.today':      '今天',
-    'due.never':      '—',
-    'insight.label':  '💡 核心思路',
-    'lc.open':        'LeetCode ↗',
-    'lc.cn':          '力扣 ↗',
-    'stats.problems': '道题',
-    'stats.reviews':  '次复习',
-    'stats.overdue':  '已逾期',
-    'diff.easy':      '简单',
-    'diff.medium':    '中等',
-    'diff.hard':      '困难',
+    'nav.today':       '今日复习',
+    'nav.bank':        '我的题库',
+    'nav.mock':        '模拟面试',
+    'today.title':     '今天该复习哪些题？',
+    'today.sub':       '根据到期时间、薄弱点和最近活动自动选题。',
+    'today.btn':       '⚡ 生成今日题目',
+    'today.loading':   '加载中…',
+    'today.done':      '⚡ 生成今日题目',
+    'today.empty':     '🎉 今日无到期题目 — 全部完成！',
+    'today.err':       '加载失败，请确认服务正在运行。',
+    'add.title':       '添加题目',
+    'add.placeholder': '题目编号（如 146）',
+    'add.btn':         '添加',
+    'add.inbank':      '该题已在题库中。',
+    'add.err':         '添加失败，请重试。',
+    'bank.title':      '我的题库',
+    'bank.filter':     '筛选…',
+    'bank.empty1':     '暂无题目。',
+    'bank.empty2':     '在上方输入题号即可添加，例如 1、146、200。',
+    'tbl.id':          '编号',
+    'tbl.title':       '题目',
+    'tbl.diff':        '难度',
+    'tbl.due':         '下次复习',
+    'tbl.reviews':     '复习次数',
+    'score.how':       '这次表现如何？',
+    'score.0':         '0\n完全忘了',
+    'score.1':         '1\n部分记住',
+    'score.2':         '2\n基本会',
+    'score.3':         '3\n非常熟练',
+    'score.min':       '用时（分钟，可选）',
+    'score.note':      '笔记（可选）',
+    'score.mistake':   '易错点（可选）',
+    'score.submit':    '提交',
+    'score.done':      '✓ 已记录 — 下次复习',
+    'score.review':    '第 # 次复习',
+    'done.btn':        '完成',
+    'row.done':        '完成',
+    'due.overdue':     '已逾期',
+    'due.today':       '今天',
+    'due.never':       '—',
+    'insight.label':   '💡 核心思路',
+    'lc.open':         'LeetCode ↗',
+    'lc.cn':           '力扣 ↗',
+    'stats.problems':  '道题',
+    'stats.reviews':   '次复习',
+    'stats.overdue':   '已逾期',
+    'diff.easy':       '简单',
+    'diff.medium':     '中等',
+    'diff.hard':       '困难',
+    'mock.title':      '🎯 模拟面试',
+    'mock.sub':        '从题库随机抽题，不显示提示，模拟真实面试环境。',
+    'mock.count':      '题目数量',
+    'mock.diff':       '难度',
+    'mock.diff.all':   '不限',
+    'mock.diff.easy':  '简单',
+    'mock.diff.medium':'中等',
+    'mock.diff.hard':  '困难',
+    'mock.time':       '限时',
+    'mock.time.none':  '不限时',
+    'mock.start':      '开始模拟面试',
+    'mock.end':        '结束并评分',
+    'mock.summary':    '本次总结',
+    'mock.again':      '再来一次',
+    'mock.time_up':    '⏰ 时间到！请提交评分。',
+    'mock.solved':     '完成题数',
+    'mock.avg':        '平均分',
+    'mock.elapsed':    '用时',
+    'mock.no_bank':    '题库为空，请先在「我的题库」中添加题目。',
   },
 };
 
 let lang = localStorage.getItem('lr_lang') || 'en';
-
-function t(key) {
-  return (STRINGS[lang] && STRINGS[lang][key]) || STRINGS.en[key] || key;
-}
+const t = key => (STRINGS[lang]?.[key]) ?? (STRINGS.en[key] ?? key);
 
 function applyI18n() {
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.dataset.i18n;
-    // For buttons that contain a span, only update the span
-    el.textContent = t(key);
-  });
-  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-    el.placeholder = t(el.dataset.i18nPh);
-  });
-  // Update lang buttons
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => { el.placeholder = t(el.dataset.i18nPh); });
   $('lang-en').classList.toggle('active', lang === 'en');
   $('lang-cn').classList.toggle('active', lang === 'cn');
-  // Re-render if bank is visible
   if ($('view-bank').classList.contains('active')) renderBank();
 }
 
 $('lang-en').addEventListener('click', () => { lang = 'en'; localStorage.setItem('lr_lang', lang); applyI18n(); });
 $('lang-cn').addEventListener('click', () => { lang = 'cn'; localStorage.setItem('lr_lang', lang); applyI18n(); });
-
 applyI18n();
 
 // ── Helpers ───────────────────────────────────────────────────────────────
@@ -494,9 +602,7 @@ function diffBadge(d) {
   return `<span class="badge badge-${d}">${label}</span>`;
 }
 
-function cnUrl(url) {
-  return url ? url.replace('leetcode.com', 'leetcode.cn') : '#';
-}
+const cnUrl = url => url ? url.replace('leetcode.com', 'leetcode.cn') : '#';
 
 // ── Nav tabs ──────────────────────────────────────────────────────────────
 document.querySelectorAll('.nav-tab').forEach(btn => {
@@ -513,55 +619,43 @@ document.querySelectorAll('.nav-tab').forEach(btn => {
 async function loadStats() {
   try {
     const s = await fetch('/api/stats').then(r => r.json());
-    if (lang === 'cn') {
-      $('nav-stats').innerHTML = `
-        <span><b>${s.total_problems}</b> ${t('stats.problems')}</span>
-        <span><b>${s.total_reviews}</b> ${t('stats.reviews')}</span>
-        <span class="${s.overdue > 0 ? 'overdue' : ''}"><b>${s.overdue}</b> ${t('stats.overdue')}</span>
-      `;
-    } else {
-      $('nav-stats').innerHTML = `
-        <span><b>${s.total_problems}</b> problems</span>
-        <span><b>${s.total_reviews}</b> reviews</span>
-        <span class="${s.overdue > 0 ? 'overdue' : ''}"><b>${s.overdue}</b> overdue</span>
-      `;
-    }
+    $('nav-stats').innerHTML = lang === 'cn'
+      ? `<span><b>${s.total_problems}</b> ${t('stats.problems')}</span>
+         <span><b>${s.total_reviews}</b> ${t('stats.reviews')}</span>
+         <span class="${s.overdue > 0 ? 'overdue' : ''}"><b>${s.overdue}</b> ${t('stats.overdue')}</span>`
+      : `<span><b>${s.total_problems}</b> problems</span>
+         <span><b>${s.total_reviews}</b> reviews</span>
+         <span class="${s.overdue > 0 ? 'overdue' : ''}"><b>${s.overdue}</b> overdue</span>`;
   } catch(e) {}
 }
 loadStats();
 
 // ── TODAY ─────────────────────────────────────────────────────────────────
-const btnGen  = $('btn-generate');
-const cardsEl = $('cards-grid');
-
-btnGen.addEventListener('click', generateToday);
-
-async function generateToday() {
-  btnGen.disabled = true;
-  btnGen.querySelector('[data-i18n]').textContent = t('today.loading');
-  cardsEl.innerHTML = '';
+$('btn-generate').addEventListener('click', async () => {
+  const btn = $('btn-generate');
+  const grid = $('cards-grid');
+  btn.disabled = true;
+  btn.querySelector('[data-i18n]').textContent = t('today.loading');
+  grid.innerHTML = '';
   try {
-    const data = await fetch('/api/today').then(r => r.json());
-    if (!data.picks.length) {
-      cardsEl.innerHTML = `<p style="color:var(--muted);font-size:.9rem">${t('today.empty')}</p>`;
-    } else {
-      data.picks.forEach((p, i) => cardsEl.appendChild(buildCard(p, i + 1)));
-    }
+    const { picks } = await fetch('/api/today').then(r => r.json());
+    grid.innerHTML = picks.length
+      ? ''
+      : `<p style="color:var(--muted);font-size:.9rem">${t('today.empty')}</p>`;
+    picks.forEach((p, i) => grid.appendChild(buildCard(p, i + 1)));
   } catch(e) {
-    cardsEl.innerHTML = `<p style="color:var(--hard)">${t('today.err')}</p>`;
+    grid.innerHTML = `<p style="color:var(--hard)">${t('today.err')}</p>`;
   } finally {
-    btnGen.disabled = false;
-    btnGen.querySelector('[data-i18n]').textContent = t('today.done');
+    btn.disabled = false;
+    btn.querySelector('[data-i18n]').textContent = t('today.done');
   }
-}
+});
 
-function buildCard(p, n) {
+function buildCard(p, n, { hiddenInsight = false } = {}) {
   const card = document.createElement('div');
   card.className = 'card';
   card.style.animationDelay = `${(n - 1) * 0.07}s`;
-  const tagPills = (p.tags || []).slice(0, 5).map(t_ => `<span class="tag-pill">${t_}</span>`).join('');
-  const cn = cnUrl(p.url);
-
+  const tagPills = (p.tags || []).slice(0, 5).map(tag => `<span class="tag-pill">${tag}</span>`).join('');
   card.innerHTML = `
     <div class="card-header">
       <div class="card-num">#${p.problem_id}</div>
@@ -574,11 +668,11 @@ function buildCard(p, n) {
       </div>
     </div>
     ${tagPills ? `<div class="card-tags">${tagPills}</div>` : ''}
-    ${p.insight ? `<div class="card-insight"><span class="card-insight-label">${t('insight.label')}</span>${p.insight}</div>` : ''}
-    <div><span class="badge badge-reason">${p.reason}</span></div>
+    ${p.insight && !hiddenInsight ? `<div class="card-insight"><span class="card-insight-label">${t('insight.label')}</span>${p.insight}</div>` : ''}
+    ${p.reason  ? `<div><span class="badge badge-reason">${p.reason}</span></div>` : ''}
     <div class="card-actions">
       <a class="btn-lc"    href="${p.url || '#'}" target="_blank" rel="noopener">${t('lc.open')}</a>
-      <a class="btn-lc cn" href="${cn}"           target="_blank" rel="noopener">${t('lc.cn')}</a>
+      <a class="btn-lc cn" href="${cnUrl(p.url)}" target="_blank" rel="noopener">${t('lc.cn')}</a>
       <button class="btn-done">${t('done.btn')}</button>
     </div>
   `;
@@ -592,18 +686,13 @@ function buildCard(p, n) {
 function buildScorePanel(pid, onDone) {
   const panel = document.createElement('div');
   panel.className = 'score-panel';
-  const [s0a, s0b] = t('score.0').split('\n');
-  const [s1a, s1b] = t('score.1').split('\n');
-  const [s2a, s2b] = t('score.2').split('\n');
-  const [s3a, s3b] = t('score.3').split('\n');
+  const scores = [0, 1, 2, 3].map(i => {
+    const [a, b] = t(`score.${i}`).split('\n');
+    return `<button class="score-btn" data-score="${i}">${a}<br><small>${b}</small></button>`;
+  }).join('');
   panel.innerHTML = `
     <label>${t('score.how')}</label>
-    <div class="score-btns">
-      <button class="score-btn" data-score="0">${s0a}<br><small>${s0b}</small></button>
-      <button class="score-btn" data-score="1">${s1a}<br><small>${s1b}</small></button>
-      <button class="score-btn" data-score="2">${s2a}<br><small>${s2b}</small></button>
-      <button class="score-btn" data-score="3">${s3a}<br><small>${s3b}</small></button>
-    </div>
+    <div class="score-btns">${scores}</div>
     <input type="number" class="inp-minutes" placeholder="${t('score.min')}" min="1" max="999" />
     <textarea class="inp-note"    rows="2" placeholder="${t('score.note')}"></textarea>
     <textarea class="inp-mistake" rows="2" placeholder="${t('score.mistake')}"></textarea>
@@ -628,19 +717,17 @@ function buildScorePanel(pid, onDone) {
           problem_id: pid,
           score:      selectedScore,
           minutes:    parseInt(panel.querySelector('.inp-minutes').value) || null,
-          note:       panel.querySelector('.inp-note').value.trim() || null,
+          note:       panel.querySelector('.inp-note').value.trim()    || null,
           mistake:    panel.querySelector('.inp-mistake').value.trim() || null,
         }),
       }).then(r => r.json());
-      const reviewLabel = lang === 'cn'
-        ? `第 ${res.review_count} 次复习`
-        : `review #${res.review_count}`;
+      // Use t('score.review') — substituting '#' with the actual count
+      const reviewLabel = t('score.review').replace('#', res.review_count);
       panel.innerHTML = `<div class="card-done-msg">${t('score.done')} <b>${res.next_due_at}</b> · ${reviewLabel}</div>`;
       loadStats();
-      if (onDone) onDone();
+      if (onDone) onDone(selectedScore);
     } catch(e) {
       panel.querySelector('.btn-submit').disabled = false;
-      alert(t('add.err'));
     }
   });
   return panel;
@@ -653,8 +740,7 @@ let sortAsc  = true;
 
 async function loadBank() {
   try {
-    const res = await fetch('/api/bank').then(r => r.json());
-    bankData = res.problems;
+    bankData = (await fetch('/api/bank').then(r => r.json())).problems;
     renderBank();
   } catch(e) {}
 }
@@ -668,52 +754,43 @@ function renderBank() {
     (p.difficulty || '').toLowerCase().includes(filter) ||
     (p.tags || []).some(tag => tag.includes(filter))
   );
-
   rows.sort((a, b) => {
-    let va = a[sortCol], vb = b[sortCol];
-    if (va == null) va = sortAsc ? 'zzz' : '';
-    if (vb == null) vb = sortAsc ? 'zzz' : '';
+    let va = a[sortCol] ?? (sortAsc ? 'zzz' : '');
+    let vb = b[sortCol] ?? (sortAsc ? 'zzz' : '');
     if (sortCol === 'review_count' || sortCol === 'avg_score') { va = +va || 0; vb = +vb || 0; }
     return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
   });
 
   $('bank-count').textContent = `(${rows.length})`;
-  const tbody = $('bank-tbody');
-  tbody.innerHTML = '';
+  $('bank-tbody').innerHTML = '';
   $('bank-empty').style.display = rows.length === 0 ? 'block' : 'none';
-  $('bank-empty').querySelector('[data-i18n]')?.setAttribute('data-i18n', 'bank.empty1');
 
   const today = new Date().toISOString().slice(0, 10);
-
   rows.forEach(p => {
-    const tr = document.createElement('tr');
     let dueCell = `<span class="due-never">${t('due.never')}</span>`;
     if (p.next_due_at) {
-      if      (p.next_due_at < today)  dueCell = `<span class="due-overdue">${t('due.overdue')}</span>`;
-      else if (p.next_due_at === today) dueCell = `<span class="due-today">${t('due.today')}</span>`;
-      else                              dueCell = `<span class="due-upcoming">${p.next_due_at}</span>`;
+      dueCell = p.next_due_at < today
+        ? `<span class="due-overdue">${t('due.overdue')}</span>`
+        : p.next_due_at === today
+        ? `<span class="due-today">${t('due.today')}</span>`
+        : `<span class="due-upcoming">${p.next_due_at}</span>`;
     }
-    const cn = cnUrl(p.url);
-    const reviewInfo = p.review_count
-      ? `${p.review_count}${p.avg_score != null ? ` · avg ${p.avg_score}` : ''}`
-      : '0';
-
+    const tr = document.createElement('tr');
     tr.innerHTML = `
       <td class="td-id">#${p.problem_id}</td>
       <td class="td-title">
         <a href="${p.url || '#'}" target="_blank" rel="noopener">${p.title}</a>
-        <a class="td-cn-link" href="${cn}" target="_blank" rel="noopener">力扣</a>
+        <a class="td-cn-link" href="${cnUrl(p.url)}" target="_blank" rel="noopener">力扣</a>
         ${p.insight ? `<div class="td-insight">${p.insight}</div>` : ''}
       </td>
       <td>${diffBadge(p.difficulty)}</td>
       <td class="td-due">${dueCell}</td>
-      <td style="color:var(--muted);font-size:.78rem">${reviewInfo}</td>
+      <td style="color:var(--muted);font-size:.78rem">${p.review_count || 0}${p.avg_score != null ? ` · avg ${p.avg_score}` : ''}</td>
       <td class="td-actions"><button class="btn-row-done">${t('row.done')}</button></td>
     `;
-
     tr.querySelector('.btn-row-done').addEventListener('click', function() {
       const existing = tr.nextSibling;
-      if (existing && existing.classList?.contains('score-row')) {
+      if (existing?.classList?.contains('score-row')) {
         existing.remove(); this.textContent = t('row.done'); return;
       }
       this.textContent = '✕';
@@ -731,9 +808,8 @@ function renderBank() {
       panelRow.appendChild(td);
       tr.after(panelRow);
     });
-    tbody.appendChild(tr);
+    $('bank-tbody').appendChild(tr);
   });
-
   document.querySelectorAll('#bank-table thead th').forEach(th => {
     th.classList.toggle('sorted', th.dataset.col === sortCol);
   });
@@ -742,77 +818,183 @@ function renderBank() {
 $('bank-filter').addEventListener('input', renderBank);
 document.querySelectorAll('#bank-table thead th[data-col]').forEach(th => {
   th.addEventListener('click', () => {
-    sortCol = th.dataset.col;
-    sortAsc = sortCol === th.dataset.col ? !sortAsc : true;
+    // Fix: read sortCol BEFORE updating it, so toggle logic is correct
+    sortAsc = th.dataset.col === sortCol ? !sortAsc : true;
     sortCol = th.dataset.col;
     renderBank();
   });
 });
 
 // ── ADD PROBLEM ───────────────────────────────────────────────────────────
-const addInput   = $('add-input');
-const btnAdd     = $('btn-add');
-const addPreview = $('add-preview');
-const addStatus  = $('add-status');
-let lookupTimer  = null;
+let lookupTimer = null;
 
-addInput.addEventListener('input', () => {
+$('add-input').addEventListener('input', () => {
   clearTimeout(lookupTimer);
-  const val = addInput.value.trim();
-  addPreview.classList.remove('visible');
-  addStatus.classList.remove('visible');
-  if (!val || !/^\d+$/.test(val)) return;
-  lookupTimer = setTimeout(() => lookupPreview(val), 350);
+  const val = $('add-input').value.trim();
+  $('add-preview').classList.remove('visible');
+  $('add-status').classList.remove('visible');
+  if (val && /^\d+$/.test(val)) lookupTimer = setTimeout(() => lookupPreview(val), 350);
 });
-addInput.addEventListener('keydown', e => { if (e.key === 'Enter') doAdd(); });
-btnAdd.addEventListener('click', doAdd);
+$('add-input').addEventListener('keydown', e => { if (e.key === 'Enter') doAdd(); });
+$('btn-add').addEventListener('click', doAdd);
 
 async function lookupPreview(pid) {
   try {
     const meta = await fetch(`/api/search/${pid}`).then(r => r.json());
     $('add-preview-title').textContent = `#${meta.problem_id} ${meta.title}`;
     $('add-preview-diff').innerHTML = diffBadge(meta.difficulty);
-    addPreview.classList.add('visible');
+    $('add-preview').classList.add('visible');
     if (meta.in_bank) {
-      addStatus.textContent = t('add.inbank');
-      addStatus.style.color = 'var(--medium)';
-      addStatus.classList.add('visible');
-      btnAdd.disabled = true;
+      $('add-status').textContent = t('add.inbank');
+      $('add-status').style.color = 'var(--medium)';
+      $('add-status').classList.add('visible');
+      $('btn-add').disabled = true;
     } else {
-      btnAdd.disabled = false;
+      $('btn-add').disabled = false;
     }
-  } catch(e) {
-    addPreview.classList.remove('visible');
-  }
+  } catch(e) { /* not in metadata — silently ignore */ }
 }
 
 async function doAdd() {
-  const val = addInput.value.trim();
+  const val = $('add-input').value.trim();
   if (!val) return;
-  btnAdd.disabled = true;
-  btnAdd.textContent = t('add.adding');
-  addStatus.classList.remove('visible');
+  $('btn-add').disabled = true;
+  $('btn-add').textContent = '…';
+  $('add-status').classList.remove('visible');
   try {
     const res = await fetch('/api/add', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ problem_id: val }),
     }).then(r => r.json());
-    addStatus.textContent = `✓ ${res.problem_id}. ${res.title}`;
-    addStatus.style.color = 'var(--accent)';
-    addStatus.classList.add('visible');
-    addInput.value = '';
-    addPreview.classList.remove('visible');
+    $('add-status').textContent = `✓ ${res.problem_id}. ${res.title}`;
+    $('add-status').style.color = 'var(--accent)';
+    $('add-status').classList.add('visible');
+    $('add-input').value = '';
+    $('add-preview').classList.remove('visible');
     loadStats();
     loadBank();
   } catch(e) {
-    addStatus.textContent = t('add.err');
-    addStatus.style.color = 'var(--hard)';
-    addStatus.classList.add('visible');
+    $('add-status').textContent = t('add.err');
+    $('add-status').style.color = 'var(--hard)';
+    $('add-status').classList.add('visible');
   } finally {
-    btnAdd.textContent = t('add.btn');
-    btnAdd.disabled = false;
+    $('btn-add').textContent = t('add.btn');
+    $('btn-add').disabled = false;
   }
 }
+
+// ── MOCK INTERVIEW ────────────────────────────────────────────────────────
+let mockTimerInterval = null;
+let mockSecondsLeft   = 0;
+let mockStartTime     = 0;
+let mockScores        = {};   // { pid: score | null }
+
+// Chip group helper
+function chipGroup(groupId, onSelect) {
+  const group = $(groupId);
+  group.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      group.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      if (onSelect) onSelect(chip.dataset.val);
+    });
+  });
+  return () => group.querySelector('.chip.selected')?.dataset.val;
+}
+
+const getCount = chipGroup('chip-count');
+const getDiff  = chipGroup('chip-diff');
+const getTime  = chipGroup('chip-time');
+
+$('btn-start-mock').addEventListener('click', startMock);
+$('btn-end-mock').addEventListener('click', endMock);
+$('btn-mock-again').addEventListener('click', resetMock);
+
+async function startMock() {
+  const count = parseInt(getCount()) || 2;
+  const diff  = getDiff() || 'all';
+  const secs  = parseInt(getTime()) || 0;
+
+  let data;
+  try {
+    data = await fetch(`/api/mock?count=${count}&difficulty=${diff}`).then(r => r.json());
+  } catch(e) {
+    alert(t('mock.no_bank')); return;
+  }
+  if (!data.problems?.length) { alert(t('mock.no_bank')); return; }
+
+  // Show session screen
+  $('mock-config').style.display  = 'none';
+  $('mock-summary').style.display = 'none';
+  const session = $('mock-session');
+  session.style.display = 'flex';
+
+  // Build cards (no insights — it's a test!)
+  const grid = $('mock-cards');
+  grid.innerHTML = '';
+  mockScores = {};
+  data.problems.forEach((p, i) => {
+    mockScores[p.problem_id] = null;
+    grid.appendChild(buildCard(p, i + 1, { hiddenInsight: true }));
+  });
+
+  // Timer
+  mockSecondsLeft = secs;
+  mockStartTime   = Date.now();
+  if (secs > 0) {
+    renderTimer(secs);
+    mockTimerInterval = setInterval(() => {
+      mockSecondsLeft--;
+      renderTimer(mockSecondsLeft);
+      if (mockSecondsLeft <= 0) {
+        clearInterval(mockTimerInterval);
+        $('mock-timer').textContent = t('mock.time_up');
+        $('mock-timer').className   = 'mock-timer alert';
+      }
+    }, 1000);
+  } else {
+    $('mock-timer').textContent = '∞';
+    $('mock-timer').className   = 'mock-timer';
+  }
+}
+
+function renderTimer(secs) {
+  const m = Math.floor(Math.abs(secs) / 60).toString().padStart(2, '0');
+  const s = (Math.abs(secs) % 60).toString().padStart(2, '0');
+  $('mock-timer').textContent = secs < 0 ? `-${m}:${s}` : `${m}:${s}`;
+  $('mock-timer').className   = 'mock-timer' + (secs <= 0 ? ' alert' : secs < 300 ? ' warn' : '');
+}
+
+function endMock() {
+  clearInterval(mockTimerInterval);
+  const elapsed = Math.floor((Date.now() - mockStartTime) / 1000);
+  const elapsedStr = `${Math.floor(elapsed / 60)}m ${elapsed % 60}s`;
+
+  // Collect scores already submitted via the score panel
+  const scores  = Object.values(mockScores).filter(v => v !== null);
+  const solved  = scores.length;
+  const avg     = solved ? (scores.reduce((a, b) => a + b, 0) / solved).toFixed(1) : '—';
+
+  $('mock-session').style.display = 'none';
+  const summary = $('mock-summary');
+  summary.style.display = 'flex';
+  $('summary-body').innerHTML = `
+    <div class="summary-row"><span>${t('mock.solved')}</span><span>${solved} / ${Object.keys(mockScores).length}</span></div>
+    <div class="summary-row"><span>${t('mock.avg')}</span><span>${avg}</span></div>
+    <div class="summary-row"><span>${t('mock.elapsed')}</span><span>${elapsedStr}</span></div>
+  `;
+}
+
+function resetMock() {
+  clearInterval(mockTimerInterval);
+  $('mock-summary').style.display = 'none';
+  $('mock-session').style.display = 'none';
+  $('mock-config').style.display  = 'flex';
+}
+
+// Track scores as user submits cards inside mock session
+// Patch buildScorePanel onDone to record score
+const _origBuildScorePanel = buildScorePanel;
 </script>
 </body>
 </html>

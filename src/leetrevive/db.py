@@ -249,6 +249,12 @@ def get_all_reviews(db_path: Optional[Path] = None) -> list[Review]:
     return [_to_review(r) for r in rows]
 
 
+def count_reviews(db_path: Optional[Path] = None) -> int:
+    path = db_path or get_db_path()
+    with _connect(path) as conn:
+        return conn.execute("SELECT COUNT(*) FROM reviews").fetchone()[0]
+
+
 # ---------------------------------------------------------------------------
 # Knowledge notes (learning map insights)
 # ---------------------------------------------------------------------------
